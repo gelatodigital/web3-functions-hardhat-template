@@ -1,0 +1,38 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/AdvertisingBoard/AdvertisingBoard.sol": {
+      "content": "// SPDX-License-Identifier: UNLICENSED\npragma solidity ^0.8.0;\n\nimport {IOpsProxyFactory} from \"./IOpsProxyFactory.sol\";\n\ncontract AdvertisingBoard {\n    IOpsProxyFactory public immutable opsProxyFactory;\n    mapping(address => string) public messages;\n\n    constructor(IOpsProxyFactory _opsProxyFactory) {\n        opsProxyFactory = _opsProxyFactory;\n    }\n\n    function postMessage(string calldata _message) external {\n        messages[msg.sender] = _message;\n    }\n\n    function viewMessage(address _eoa) external view returns (string memory) {\n        (address dedicatedMsgSender, ) = opsProxyFactory.getProxyOf(_eoa);\n\n        return messages[dedicatedMsgSender];\n    }\n}\n"
+    },
+    "contracts/AdvertisingBoard/IOpsProxyFactory.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ninterface IOpsProxyFactory {\n    /**\n     * @notice Emitted when an OpsProxy is deployed.\n     *\n     * @param deployer Address which initiated the deployment\n     * @param owner The address which the proxy is for.\n     * @param proxy Address of deployed proxy.\n     */\n    event DeployProxy(\n        address indexed deployer,\n        address indexed owner,\n        address indexed proxy\n    );\n\n    /**\n     * @notice Emitted when OpsProxy implementation to be deployed is changed.\n     *\n     * @param oldImplementation Previous OpsProxy implementation.\n     * @param newImplementation Current OpsProxy implementation.\n     */\n    event SetImplementation(\n        address indexed oldImplementation,\n        address indexed newImplementation\n    );\n\n    /**\n     * @notice Emitted when OpsProxy implementation is added or removed from whitelist.\n     *\n     * @param implementation OpsProxy implementation.\n     * @param whitelisted Added or removed from whitelist.\n     */\n    event UpdateWhitelistedImplementation(\n        address indexed implementation,\n        bool indexed whitelisted\n    );\n\n    /**\n     * @notice Deploys OpsProxy for the msg.sender.\n     *\n     * @return proxy Address of deployed proxy.\n     */\n    function deploy() external returns (address payable proxy);\n\n    /**\n     * @notice Deploys OpsProxy for another address.\n     *\n     * @param owner Address to deploy the proxy for.\n     *\n     * @return proxy Address of deployed proxy.\n     */\n    function deployFor(address owner) external returns (address payable proxy);\n\n    /**\n     * @notice Sets the OpsProxy implementation that will be deployed by OpsProxyFactory.\n     *\n     * @param newImplementation New implementation to be set.\n     */\n    function setImplementation(address newImplementation) external;\n\n    /**\n     * @notice Add or remove OpsProxy implementation from the whitelist.\n     *\n     * @param implementation OpsProxy implementation.\n     * @param whitelist Added or removed from whitelist.\n     */\n    function updateWhitelistedImplementations(\n        address implementation,\n        bool whitelist\n    ) external;\n\n    /**\n     * @notice Determines the OpsProxy address when it is not deployed.\n     *\n     * @param account Address to determine the proxy address for.\n     */\n    function determineProxyAddress(address account)\n        external\n        view\n        returns (address);\n\n    /**\n     * @return address Proxy address owned by account.\n     * @return bool Whether if proxy is deployed\n     */\n    function getProxyOf(address account) external view returns (address, bool);\n\n    /**\n     * @return address Owner of deployed proxy.\n     */\n    function ownerOf(address proxy) external view returns (address);\n\n    /**\n     * @return bool Whether if implementation is whitelisted.\n     */\n    function whitelistedImplementations(address implementation)\n        external\n        view\n        returns (bool);\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

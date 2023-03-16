@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/Time.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity 0.8.7;\n\ncontract Time {\n    uint256 public nextExec;\n\n    function increaseTime(uint256 _interval) external {\n        mockService();\n\n        require(nextExec + _interval > block.timestamp, \"AYO\");\n\n        nextExec = block.timestamp;\n    }\n\n    function mockService() internal returns (uint256 gasUsed) {\n        uint256 gasBefore = gasleft();\n\n        while (gasUsed < 42_000) {\n            gasUsed = gasBefore - gasleft();\n        }\n\n        return gasUsed;\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

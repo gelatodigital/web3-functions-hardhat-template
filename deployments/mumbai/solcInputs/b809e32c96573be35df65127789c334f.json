@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/lz/GelatoLickerDst.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.7;\n\ninterface ILayerZeroReceiver {\n    // @notice LayerZero endpoint will invoke this function to deliver the message on the destination\n    // @param _srcChainId - the source endpoint identifier\n    // @param _srcAddress - the source sending contract address from the source chain\n    // @param _nonce - the ordered message nonce\n    // @param _payload - the signed payload is the UA bytes has encoded to be sent\n    function lzReceive(\n        uint16 _srcChainId,\n        bytes calldata _srcAddress,\n        uint64 _nonce,\n        bytes calldata _payload\n    ) external;\n}\n\ninterface IIceCreamNFT {\n    function lick(uint256 _tokenId) external;\n}\n\ncontract GelatoLickerDst is ILayerZeroReceiver {\n    address public constant lzEndpoint =\n        address(0xf69186dfBa60DdB133E91E9A4B5673624293d8F8); // mumbai lz endpoint\n    IIceCreamNFT public constant iceCreamNFT =\n        IIceCreamNFT(0xa5f9b728ecEB9A1F6FCC89dcc2eFd810bA4Dec41); // mumbai IceCreamNFT address\n    address public constant srcLicker =\n        address(0xA3E011fAAFFEFF00f1B85600D759449A111E35A8); // goerli gelato licker address\n\n    event CCLicked(\n        uint16 srcChainId,\n        address srcAddress,\n        uint256 indexed tokenId,\n        uint256 timestamp\n    );\n\n    function lzReceive(\n        uint16 _srcChainId,\n        bytes memory _srcAddress,\n        uint64,\n        bytes memory lickPayload\n    ) external override {\n        require(\n            msg.sender == address(lzEndpoint),\n            \"CrossChainGelatoLicker: Only endpoint\"\n        );\n        address srcAddress;\n        assembly {\n            srcAddress := mload(add(_srcAddress, 20))\n        }\n        require(\n            srcAddress == srcLicker,\n            \"CrossChainGelatoLicker: Only srcLicker\"\n        );\n\n        uint256 tokenId = abi.decode(lickPayload, (uint256));\n\n        iceCreamNFT.lick(tokenId);\n\n        emit CCLicked(_srcChainId, srcAddress, tokenId, block.timestamp);\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

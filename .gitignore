@@ -1,0 +1,35 @@
+# Temporary directory
+.tmp
+
+# Dependency directory
+node_modules
+
+# Typechain generation
+typechain
+
+# local env variables
+.env
+.env.w3f
+
+# Typescript
+dist
+
+#hardhat
+artifacts
+cache
+coverage
+coverage.json
+deployments/localhost
+
+# ESLint
+*.eslintcache
+
+# macOS
+.DS_Store
+*.icloud
+
+# yarn
+yarn-error.log
+
+# vscode
+.vscode

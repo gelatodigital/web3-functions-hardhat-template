@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/lz/GelatoLickerSrc.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.7;\n\ninterface ILayerZeroEndpoint {\n    // @notice send a LayerZero message to the specified address at a LayerZero endpoint.\n    // @param _dstChainId - the destination chain identifier\n    // @param _destination - the address on destination chain (in bytes). address length/format may vary by chains\n    // @param _payload - a custom bytes payload to send to the destination contract\n    // @param _refundAddress - if the source transaction is cheaper than the amount of value passed, refund the additional amount to this address\n    // @param _zroPaymentAddress - the address of the ZRO token holder who would pay for the transaction\n    // @param _adapterParams - parameters for custom functionality. e.g. receive airdropped native gas from the relayer on destination\n    function send(\n        uint16 _dstChainId,\n        bytes calldata _destination,\n        bytes calldata _payload,\n        address payable _refundAddress,\n        address _zroPaymentAddress,\n        bytes calldata _adapterParams\n    ) external payable;\n}\n\ncontract GelatoLickerSrc {\n    uint16 public constant dstChainId = 10109; // mumbai lz chainId\n    ILayerZeroEndpoint public constant lzEndpoint =\n        ILayerZeroEndpoint(0xbfD2135BFfbb0B5378b56643c2Df8a87552Bfa23); // goerli lz endpoint address\n\n    mapping(uint256 => uint256) public lastLicked;\n\n    receive() external payable {}\n\n    //@dev called by Gelato whenever `checker` returns true\n    function initiateCCLick(address _dstLicker, uint256 _tokenId)\n        external\n        payable\n    {\n        bytes memory lickPayload = abi.encode(_tokenId);\n\n        lastLicked[_tokenId] = block.timestamp;\n\n        lzEndpoint.send{value: address(this).balance}(\n            dstChainId,\n            abi.encodePacked(_dstLicker),\n            lickPayload,\n            payable(this),\n            address(0),\n            bytes(\"\")\n        );\n    }\n\n    //@dev called by Gelato check if it is time to call `initiateCCLick`\n    function checker(address _dstLicker, uint256 _tokenId)\n        external\n        view\n        returns (bool canExec, bytes memory execPayload)\n    {\n        if (block.timestamp < lastLicked[_tokenId] + 600) {\n            canExec = false;\n            execPayload = bytes(\n                \"CrossChainGelatoLicker: Not time to cross chain lick\"\n            );\n            return (canExec, execPayload);\n        }\n\n        canExec = true;\n        execPayload = abi.encodeWithSelector(\n            this.initiateCCLick.selector,\n            _dstLicker,\n            _tokenId\n        );\n\n        return (canExec, execPayload);\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

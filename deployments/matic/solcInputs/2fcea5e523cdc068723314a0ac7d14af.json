@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/ChainlinkOps.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.7;\n\ncontract Test {\n    uint256 public interval;\n    uint256 public lastExecuted;\n\n    event LogUpKeep(address _sender, uint256 _timestamp);\n\n    constructor() {\n        interval = 5 minutes;\n    }\n\n    function performUpkeep(bytes calldata) external {\n        require(block.timestamp >= lastExecuted + interval, \"slow\");\n\n        lastExecuted = block.timestamp;\n\n        emit LogUpKeep(msg.sender, block.timestamp);\n    }\n\n    function checkUpkeep(bytes calldata)\n        external\n        view\n        returns (bool, bytes memory)\n    {\n        if (block.timestamp >= lastExecuted + interval) {\n            return (\n                true,\n                abi.encodeWithSelector(this.performUpkeep.selector, bytes(\"\"))\n            );\n        }\n\n        return (false, bytes(\"wait\"));\n    }\n\n    function setInterval(uint256 _interval) external {\n        interval = _interval;\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

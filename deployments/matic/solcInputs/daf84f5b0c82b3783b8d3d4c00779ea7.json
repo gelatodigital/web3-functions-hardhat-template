@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/Read.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.7;\n\ncontract Read {\n    function read()\n        external\n        pure\n        returns (address[] memory a, address[] memory b)\n    {\n        a = new address[](1);\n        a[0] = address(0xCDf41a135C65d0013393B3793F92b4FAF31032d0);\n\n        b = new address[](2);\n        b[0] = address(0);\n        b[1] = address(0x5ce6047a715B1919A58C549E6FBc1921B4d9287D);\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

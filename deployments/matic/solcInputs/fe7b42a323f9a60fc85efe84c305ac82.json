@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/Counter.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity 0.8.7;\n\ncontract Counter {\n    uint256 public count;\n    uint256 public lastTimestamp;\n\n    event LogCountSet(uint256 _newCount, uint256 _timestamp);\n\n    function setCount(uint256 _count) external {\n        count = _count;\n        emit LogCountSet(_count, block.timestamp);\n    }\n\n    function canSetCount() external view returns (bool) {\n        if (block.timestamp >= lastTimestamp + 5 minutes) return true;\n        return false;\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

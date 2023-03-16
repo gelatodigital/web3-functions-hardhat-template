@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/WasteGas.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity 0.8.7;\n\n// Flashbots currently enforces a gas used floor. As of August 2021, that value is 42,000 gas. Any transaction that consumes less than this floor is rejected by relay\n// This contract enables testing Flashbots with a single, simple transaction that will consume transaction's gas limit, ensuring the bundle won't be rejected\n// See: https://docs.flashbots.net/flashbots-auction/searchers/advanced/bundle-pricing\n\ncontract WasteGas {\n    event Waste(address sender, uint256 gas);\n    uint256 constant GAS_REQUIRED_TO_FINISH_EXECUTION = 60;\n\n    fallback() external {\n        emit Waste(msg.sender, gasleft());\n        while (gasleft() > GAS_REQUIRED_TO_FINISH_EXECUTION) {}\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

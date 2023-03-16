@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/Read.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.7;\n\ncontract Read {\n    struct Addresses {\n        address[] firstAddresses;\n        address[] secondAddresses;\n    }\n\n    struct Tuple {\n        bool boolean;\n        address addr;\n        uint256 number;\n    }\n\n    function readTuple() public view returns (Tuple memory) {\n        return Tuple(true, address(this), 1);\n    }\n\n    function readAddresses()\n        public\n        pure\n        returns (address[] memory a, address[] memory b)\n    {\n        a = new address[](1);\n        a[0] = address(0xCDf41a135C65d0013393B3793F92b4FAF31032d0);\n\n        b = new address[](2);\n        b[0] = address(0);\n        b[1] = address(0x5ce6047a715B1919A58C549E6FBc1921B4d9287D);\n    }\n\n    function readNumbers()\n        external\n        pure\n        returns (uint256[] memory a, uint256[] memory b)\n    {\n        a = new uint256[](1);\n        a[0] = 1;\n\n        b = new uint256[](2);\n        b[0] = 2;\n        b[1] = 3;\n    }\n\n    function readMixed()\n        public\n        pure\n        returns (address[] memory a, uint256[] memory b)\n    {\n        a = new address[](1);\n        a[0] = address(0);\n\n        b = new uint256[](2);\n        b[0] = 2;\n        b[1] = 3;\n    }\n\n    function readMixedSeperate()\n        external\n        pure\n        returns (\n            address[] memory a,\n            uint256 c,\n            uint256[] memory b\n        )\n    {\n        a = new address[](1);\n        a[0] = address(0);\n\n        c = 137;\n\n        b = new uint256[](2);\n        b[0] = 2;\n        b[1] = 3;\n    }\n\n    function readAddressesStruct() external pure returns (Addresses memory) {\n        (address[] memory a, address[] memory b) = readAddresses();\n        Addresses memory addresses = Addresses({\n            firstAddresses: a,\n            secondAddresses: b\n        });\n\n        return addresses;\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

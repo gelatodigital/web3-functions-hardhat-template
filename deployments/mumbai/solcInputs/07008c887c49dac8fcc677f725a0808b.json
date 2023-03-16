@@ -1,0 +1,38 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/lz/GelatoLicker.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.7;\n\nimport \"./LibIceCreamNFTAddress.sol\";\n\ninterface ILayerZeroReceiver {\n    // @notice LayerZero endpoint will invoke this function to deliver the message on the destination\n    // @param _srcChainId - the source endpoint identifier\n    // @param _srcAddress - the source sending contract address from the source chain\n    // @param _nonce - the ordered message nonce\n    // @param _payload - the signed payload is the UA bytes has encoded to be sent\n    function lzReceive(\n        uint16 _srcChainId,\n        bytes calldata _srcAddress,\n        uint64 _nonce,\n        bytes calldata _payload\n    ) external;\n}\n\ninterface IIceCreamNFT {\n    function lick(uint256 _tokenId) external;\n}\n\ncontract GelatoLicker is ILayerZeroReceiver {\n    using LibIceCreamNFTAddress for uint256;\n\n    address public immutable lzEndpoint;\n    address public immutable srcLicker;\n\n    event Licked(uint256 indexed _tokenId, uint256 _time);\n\n    constructor(address _lzEndpoint, address _srcLicker) {\n        lzEndpoint = _lzEndpoint;\n        srcLicker = _srcLicker;\n    }\n\n    function lzReceive(\n        uint16,\n        bytes memory _srcAddress,\n        uint64,\n        bytes memory lickPayload\n    ) external override {\n        require(\n            msg.sender == address(lzEndpoint),\n            \"CrossChainGelatoLicker: Only endpoint\"\n        );\n        address srcAddress;\n        assembly {\n            srcAddress := mload(add(_srcAddress, 20))\n        }\n        require(\n            srcAddress == srcLicker,\n            \"CrossChainGelatoLicker: Only srcLicker\"\n        );\n\n        uint256 tokenId = abi.decode(lickPayload, (uint256));\n\n        _lick(tokenId);\n    }\n\n    function _lick(uint256 _tokenId) internal {\n        IIceCreamNFT iceCreamNFT = IIceCreamNFT(\n            block.chainid.getIceCreamNFTAddress()\n        );\n\n        iceCreamNFT.lick(_tokenId);\n\n        emit Licked(_tokenId, block.timestamp);\n    }\n}\n"
+    },
+    "contracts/lz/LibIceCreamNFTAddress.sol": {
+      "content": "// SPDX-License-Identifier: MIT\n\npragma solidity >=0.5.0;\n\nlibrary LibIceCreamNFTAddress {\n    uint256 private constant _ID_BSC = 56;\n    uint256 private constant _ID_AVAX = 43114;\n    uint256 private constant _ID_POLYGON = 137;\n    uint256 private constant _ID_ARBITRUM = 42161;\n    uint256 private constant _ID_OPTIMISM = 10;\n    uint256 private constant _ID_FANTOM = 250;\n    uint256 private constant _ID_MUMBAI = 80001;\n\n    address private constant _ICE_CREAM_BSC =\n        address(0x915E840ce933dD1dedA87B08C0f4cCE46916fd01);\n    address private constant _ICE_CREAM_AVAX =\n        address(0x915E840ce933dD1dedA87B08C0f4cCE46916fd01);\n    address private constant _ICE_CREAM_POLYGON =\n        address(0xb74de3F91e04d0920ff26Ac28956272E8d67404D);\n    address private constant _ICE_CREAM_ARBITRUM =\n        address(0x0f44eAAC6B802be1A4b01df9352aA9370c957f5a);\n    address private constant _ICE_CREAM_OPTIMISM =\n        address(0x63C51b1D80B209Cf336Bec5a3E17D3523B088cdb);\n    address private constant _ICE_CREAM_FANTOM =\n        address(0x255F82563b5973264e89526345EcEa766DB3baB2);\n    address private constant _ICE_CREAM_MUMBAI =\n        address(0xa5f9b728ecEB9A1F6FCC89dcc2eFd810bA4Dec41);\n\n    function getIceCreamNFTAddress(uint256 _chainId)\n        internal\n        pure\n        returns (address)\n    {\n        if (_chainId == _ID_BSC) return _ICE_CREAM_BSC;\n        if (_chainId == _ID_AVAX) return _ICE_CREAM_AVAX;\n        if (_chainId == _ID_POLYGON) return _ICE_CREAM_POLYGON;\n        if (_chainId == _ID_ARBITRUM) return _ICE_CREAM_ARBITRUM;\n        if (_chainId == _ID_OPTIMISM) return _ICE_CREAM_OPTIMISM;\n        if (_chainId == _ID_FANTOM) return _ICE_CREAM_FANTOM;\n        if (_chainId == _ID_MUMBAI) return _ICE_CREAM_MUMBAI;\n        else revert(\"LibIceCreamNFTAddress: Not supported by LZ\");\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

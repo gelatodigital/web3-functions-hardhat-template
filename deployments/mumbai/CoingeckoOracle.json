@@ -1,0 +1,138 @@
+{
+  "address": "0x71B9B0F6C999CBbB0FeF9c92B80D54e4973214da",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "timeStamp",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "price",
+          "type": "uint256"
+        }
+      ],
+      "name": "PriceUpdated",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "lastUpdated",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "price",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_price",
+          "type": "uint256"
+        }
+      ],
+      "name": "updatePrice",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x97e9e61e5a3b2742b681f616c9dd7de3d749ebcc849a6e26403ac74cb83160c6",
+  "receipt": {
+    "to": null,
+    "from": "0x4C0A3A5A04332c3a03a8fCa3D1f0AE34474b51B4",
+    "contractAddress": "0x71B9B0F6C999CBbB0FeF9c92B80D54e4973214da",
+    "transactionIndex": 2,
+    "gasUsed": "148867",
+    "logsBloom": "0x00000000000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000800000000000000000000100000000000000000000000000000000000000000020000000000000000080000000000000000000000040000000000000000000000000000000000000000000000000010000200000000000000020000000000000000001000000000000000000000000004000000000000000000001000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000100000",
+    "blockHash": "0x07339d7012f3af1102c9e224f7fa16c2343395711c6696dc350bc087a921c41a",
+    "transactionHash": "0x97e9e61e5a3b2742b681f616c9dd7de3d749ebcc849a6e26403ac74cb83160c6",
+    "logs": [
+      {
+        "transactionIndex": 2,
+        "blockNumber": 32889689,
+        "transactionHash": "0x97e9e61e5a3b2742b681f616c9dd7de3d749ebcc849a6e26403ac74cb83160c6",
+        "address": "0x0000000000000000000000000000000000001010",
+        "topics": [
+          "0x4dfe1bbbcf077ddc3e01291eea2d5c70c2b422b415d95645b9adcfd678cb1d63",
+          "0x0000000000000000000000000000000000000000000000000000000000001010",
+          "0x0000000000000000000000004c0a3a5a04332c3a03a8fca3d1f0ae34474b51b4",
+          "0x000000000000000000000000c26880a0af2ea0c7e8130e6ec47af756465452e8"
+        ],
+        "data": "0x0000000000000000000000000000000000000000000000000000ec65c1831a090000000000000000000000000000000000000000000000000b56b1c74a7e6cdb000000000000000000000000000000000000000000001c1ef52e79a89a12cb680000000000000000000000000000000000000000000000000b55c56188fb52d2000000000000000000000000000000000000000000001c1ef52f660e5b95e571",
+        "logIndex": 5,
+        "blockHash": "0x07339d7012f3af1102c9e224f7fa16c2343395711c6696dc350bc087a921c41a"
+      }
+    ],
+    "blockNumber": 32889689,
+    "cumulativeGasUsed": "295665",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 2,
+  "solcInputHash": "cc8b1c2be6bf2209c2f5f3f285792a0b",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.16+commit.07a7930e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"timeStamp\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"price\",\"type\":\"uint256\"}],\"name\":\"PriceUpdated\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"lastUpdated\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"price\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_price\",\"type\":\"uint256\"}],\"name\":\"updatePrice\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/CoingeckoOracle.sol\":\"CoingeckoOracle\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/CoingeckoOracle.sol\":{\"content\":\"// SPDX-License-Identifier: UNLICENSED\\npragma solidity ^0.8.0;\\n\\ncontract CoingeckoOracle {\\n    uint256 public price;\\n    uint256 public lastUpdated;\\n\\n    event PriceUpdated(uint256 indexed timeStamp, uint256 price);\\n\\n    function updatePrice(uint256 _price) external {\\n        price = _price;\\n        lastUpdated = block.timestamp;\\n\\n        emit PriceUpdated(block.timestamp, _price);\\n    }\\n}\\n\",\"keccak256\":\"0xc36530f2315497890bcd52cf9a228da87bf59ec33bcae15d4105bd9925ff8ba5\",\"license\":\"UNLICENSED\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b506101bb806100206000396000f3fe608060405234801561001057600080fd5b50600436106100415760003560e01c80638d6cc56d14610046578063a035b1fe14610062578063d0b06f5d14610080575b600080fd5b610060600480360381019061005b919061012e565b61009e565b005b61006a6100e7565b604051610077919061016a565b60405180910390f35b6100886100ed565b604051610095919061016a565b60405180910390f35b8060008190555042600181905550427f945c1c4e99aa89f648fbfe3df471b916f719e16d960fcec0737d4d56bd696838826040516100dc919061016a565b60405180910390a250565b60005481565b60015481565b600080fd5b6000819050919050565b61010b816100f8565b811461011657600080fd5b50565b60008135905061012881610102565b92915050565b600060208284031215610144576101436100f3565b5b600061015284828501610119565b91505092915050565b610164816100f8565b82525050565b600060208201905061017f600083018461015b565b9291505056fea2646970667358221220a0b61bb91e33d31053ae40d06b70055609e2d6bec00890e274a0c233c85fc88e64736f6c63430008100033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100415760003560e01c80638d6cc56d14610046578063a035b1fe14610062578063d0b06f5d14610080575b600080fd5b610060600480360381019061005b919061012e565b61009e565b005b61006a6100e7565b604051610077919061016a565b60405180910390f35b6100886100ed565b604051610095919061016a565b60405180910390f35b8060008190555042600181905550427f945c1c4e99aa89f648fbfe3df471b916f719e16d960fcec0737d4d56bd696838826040516100dc919061016a565b60405180910390a250565b60005481565b60015481565b600080fd5b6000819050919050565b61010b816100f8565b811461011657600080fd5b50565b60008135905061012881610102565b92915050565b600060208284031215610144576101436100f3565b5b600061015284828501610119565b91505092915050565b610164816100f8565b82525050565b600060208201905061017f600083018461015b565b9291505056fea2646970667358221220a0b61bb91e33d31053ae40d06b70055609e2d6bec00890e274a0c233c85fc88e64736f6c63430008100033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 3,
+        "contract": "contracts/CoingeckoOracle.sol:CoingeckoOracle",
+        "label": "price",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 5,
+        "contract": "contracts/CoingeckoOracle.sol:CoingeckoOracle",
+        "label": "lastUpdated",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_uint256"
+      }
+    ],
+    "types": {
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}
