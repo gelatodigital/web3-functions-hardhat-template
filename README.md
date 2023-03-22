@@ -62,13 +62,18 @@ PRIVATE_KEY=
 
 In `hardhat.config.ts`, you can set up configurations for your Web3 Function runtime.
 
-- `function`: Name of your web3 functions and their paths.
+- `functions`: Name of your web3 functions.
+  - `path`: File path of web3 function.
+  - `userArgs`: Default user arguments passed into web3 function. (For `npx hardhat w3f-run`)
 - `debug`: Run your web3 functions with debug mode on.
 
 ```ts
   w3f: {
     functions: {
-      helloWorld: { path: "./web3-functions/index.ts" }
+      helloWorld: {
+        path: "./web3-functions/index.ts",
+        userArgs: {}
+      },
     },
     debug: false,
   },
@@ -151,9 +156,8 @@ Web3Function.onRun(async (context: Web3FunctionContext) => {
 
   - `--logs` Show internal Web3 Function logs
   - `--debug` Show Runtime debug messages
-  - `--runtime ["thread" | "docker"]` Runtime mode. Default "thread"
 
-If your web3 function has arguments, you can define them in [`userArgs.json`](./web3-functions/examples/oracle/userArgs.json).
+If your web3 function has arguments, you can define them in [`hardhat.config.ts`](./hardhat.config.ts).
 
 Example:<br/> `npx hardhat w3f-run oracle --logs`
 
@@ -191,6 +195,7 @@ Web3Function Runtime stats:
 Hardhat will run your tests in a forked environment by default. You can configure this in `hardhat.config.ts` or by passing a flag `yarn test --network NETWORK`.
 
 ```json
+{
   defaultNetwork: "hardhat",
 
   networks: {
@@ -198,7 +203,9 @@ Hardhat will run your tests in a forked environment by default. You can configur
       forking: {
         url: `https://eth-goerli.g.alchemy.com/v2/${ALCHEMY_ID}`,
       },
+    }
   }
+}
 ```
 
 `w3f` class is injected into the hardhat runtime environment.
@@ -219,7 +226,7 @@ const storage = {};
 await hre.w3f.run("oracle", storage, userArgs);
 ```
 
-`userArgs` is optional here. When passed into `w3f.run`, it overrides the arguments defined in `userArgs.json`
+`userArgs` is optional here. When passed into `w3f.run`, it overrides the arguments defined in `hardhat.config.ts`
 
 ## Use User arguments
 
@@ -250,13 +257,16 @@ Web3Function.onRun(async (context: Web3FunctionContext) => {
 });
 ```
 
-3. Populate `userArgs.json` and test your web3 function:
+3. Populate `userArgs` in `hardhat.config.ts` and test your web3 function:
 
 ```json
-{
-  "currency": "ethereum",
-  "oracle": "0x71B9B0F6C999CBbB0FeF9c92B80D54e4973214da"
-}
+oracle: {
+  path: "./web3-functions/examples/oracle/index.ts",
+  userArgs: {
+    currency: "ethereum",
+    oracle: "0x71B9B0F6C999CBbB0FeF9c92B80D54e4973214da",
+  },
+},
 ```
 
 ```
