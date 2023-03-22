@@ -54,6 +54,6 @@ Web3Function.onRun(async (context: Web3FunctionContext) => {
   const { data } = await wrappedOracle.populateTransaction.updatePrice();
   return {
     canExec: true,
-    callData: data,
+    callData: data as string,
   };
 });
