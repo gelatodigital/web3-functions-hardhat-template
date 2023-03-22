@@ -1,6 +1,6 @@
 import hre from "hardhat";
 const { ethers, w3f } = hre;
-import { Web3Function } from "@gelatonetwork/ops-sdk";
+import { Web3Function } from "@gelatonetwork/automate-sdk";
 
 const main = async () => {
   const [deployer] = await ethers.getSigners();

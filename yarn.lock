@@ -717,10 +717,10 @@
   optionalDependencies:
     "@trufflesuite/bigint-buffer" "1.1.9"
 
-"@gelatonetwork/ops-sdk@^2.2.1-alpha":
-  version "2.2.1-alpha"
-  resolved "https://registry.yarnpkg.com/@gelatonetwork/ops-sdk/-/ops-sdk-2.2.1-alpha.tgz#bf10505ecbfc51e03baf62dc95c5535ac3b2b80f"
-  integrity sha512-pVVOmMKZWuV9Ie8hYCsByQRClRNS2mcvyBG1sN/njCRg7823AKH02n0Go62A4Vseb9mikzXQedJNk8MvRNCtPg==
+"@gelatonetwork/automate-sdk@^2.3.1-beta":
+  version "2.3.1-beta"
+  resolved "https://registry.yarnpkg.com/@gelatonetwork/automate-sdk/-/automate-sdk-2.3.1-beta.tgz#efd6e94169b23e0ff4559ba3669de71e95a462a3"
+  integrity sha512-lX1iSalJ6LD6a121Od9p+h3P78nRTmOIXSoAOKsSuaY1IgpFT2ILaEt9BT9Oex6iBLbh1AGRkKg6ezLBixd7vA==
   dependencies:
     axios "^1.2.2"
     ethers "^5.5.2"

@@ -1,5 +1,5 @@
 import hre from "hardhat";
-import { GelatoOpsSDK } from "@gelatonetwork/ops-sdk";
+import { AutomateSDK } from "@gelatonetwork/automate-sdk";
 import { AdvertisingBoard } from "../typechain";
 
 const { ethers, w3f } = hre;
@@ -12,17 +12,17 @@ const main = async () => {
   const [deployer] = await ethers.getSigners();
   const chainId = (await ethers.provider.getNetwork()).chainId;
 
-  const opsSdk = new GelatoOpsSDK(chainId, deployer);
+  const automate = new AutomateSDK(chainId, deployer);
 
   // Deploy Web3Function on IPFS
   console.log("Deploying Web3Function on IPFS...");
   const cid = await w3f.deploy("adboard");
   console.log(`Web3Function IPFS CID: ${cid}`);
 
-  // Create task using ops-sdk
+  // Create task using automate sdk
   console.log("Creating automate task...");
 
-  const { taskId, tx } = await opsSdk.createTask({
+  const { taskId, tx } = await automate.createTask({
     name: "Web3Function - Ad Board",
     execAddress: adBoard.address,
     execSelector: adBoard.interface.getSighash("postMessage"),
