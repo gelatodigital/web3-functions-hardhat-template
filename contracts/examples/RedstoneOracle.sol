@@ -31,7 +31,7 @@ contract RedstoneOracle is RapidDemoConsumerBase {
         uint256 oldPrice
     ) internal pure returns (uint) {
         if (oldPrice == 0) {
-            return 1;
+            return 1 * 10 ** _decimals;
         } else if (newPrice > oldPrice) {
             return ((newPrice - oldPrice) * 10 ** _decimals) / oldPrice;
         } else {
