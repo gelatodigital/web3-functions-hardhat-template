@@ -21,7 +21,7 @@ const ALCHEMY_ID = process.env.ALCHEMY_ID;
 assert.ok(ALCHEMY_ID, "no Alchemy ID in process.env");
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
-const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
+const ETHERSCAN_KEY = process.env.ETHERSCAN_KEY;
 
 // ================================= CONFIG =========================================
 const config: HardhatUserConfig = {
@@ -73,35 +73,46 @@ const config: HardhatUserConfig = {
 
     // Prod
     arbitrum: {
-      url: "https://arb1.arbitrum.io/rpc",
       chainId: 42161,
+      url: "https://arb1.arbitrum.io/rpc",
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
+    bsc: {
+      chainId: 56,
+      url: "https://bsc-dataseed.binance.org/",
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
     ethereum: {
-      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
       chainId: 1,
       url: `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_ID}`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
+    fantom: {
+      chainId: 250,
+      url: `https://rpcapi.fantom.network/`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
     optimism: {
-      url: "https://mainnet.optimism.io",
       chainId: 10,
+      url: "https://mainnet.optimism.io",
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
     polygon: {
+      chainId: 137,
       url: "https://rpc-mainnet.maticvigil.com",
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
 
     // Staging
     arbitrumGoerli: {
-      url: `https://arb-goerli.g.alchemy.com/v2/${ALCHEMY_ID}`,
       chainId: 421613,
+      url: `https://arb-goerli.g.alchemy.com/v2/${ALCHEMY_ID}`,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
     goerli: {
-      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [], // control with dev multisig
       chainId: 5,
       url: `https://eth-goerli.g.alchemy.com/v2/${ALCHEMY_ID}`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
     mumbai: {
       chainId: 80001,
@@ -112,7 +123,7 @@ const config: HardhatUserConfig = {
 
   verify: {
     etherscan: {
-      apiKey: ETHERSCAN_API_KEY ? ETHERSCAN_API_KEY : "",
+      apiKey: ETHERSCAN_KEY ? ETHERSCAN_KEY : "",
     },
   },
 
