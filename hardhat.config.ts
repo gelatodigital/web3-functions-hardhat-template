@@ -72,6 +72,11 @@ const config: HardhatUserConfig = {
     },
 
     // Prod
+    avalanche: {
+      url: "https://api.avax.network/ext/bc/C/rpc",
+      chainId: 43114,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
     arbitrum: {
       chainId: 42161,
       url: "https://arb1.arbitrum.io/rpc",
@@ -104,7 +109,7 @@ const config: HardhatUserConfig = {
     },
 
     // Staging
-    arbitrumGoerli: {
+    arbgoerli: {
       chainId: 421613,
       url: `https://arb-goerli.g.alchemy.com/v2/${ALCHEMY_ID}`,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
