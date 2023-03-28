@@ -14,7 +14,6 @@
     "lint": "eslint --cache . && yarn lint:sol",
     "lint:ts": "eslint -c .eslintrc.json --ext \"**/*.ts\" \"**/*.test.ts\"",
     "lint:sol": "solhint contracts/**/*.sol",
-    "postinstall": "yarn husky install",
     "test": "npx hardhat test",
     "verify": "npx hardhat etherscan-verify",
     "create-task:adboard": "npx hardhat run ./scripts/create-task-adboard.ts",
@@ -62,8 +61,8 @@
     "*.*{ts,js}": "eslint -c .eslintrc.json"
   },
   "dependencies": {
-    "@gelatonetwork/automate-sdk": "^2.3.1-beta",
-    "@gelatonetwork/web3-functions-sdk": "^0.4.7",
+    "@gelatonetwork/automate-sdk": "^2.3.2-beta",
+    "@gelatonetwork/web3-functions-sdk": "^0.4.8",
     "ky": "^0.33.2"
   }
 }
