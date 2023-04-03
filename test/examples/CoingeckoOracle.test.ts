@@ -9,6 +9,7 @@ import {
   Web3FunctionResultNotExec,
   Web3FunctionUserArgs,
 } from "@gelatonetwork/web3-functions-sdk";
+import { W3fHardhatClass } from "@gelatonetwork/web3-functions-sdk/hardhat-plugin";
 const { ethers, deployments, w3f } = hre;
 
 describe("CoingeckoOracle Tests", function () {
@@ -17,8 +18,8 @@ describe("CoingeckoOracle Tests", function () {
   let owner: SignerWithAddress;
 
   let oracle: CoingeckoOracle;
+  let oracleW3f: W3fHardhatClass;
   let userArgs: Web3FunctionUserArgs;
-  let storage: { [key: string]: string };
 
   before(async function () {
     await deployments.fixture();
@@ -26,16 +27,16 @@ describe("CoingeckoOracle Tests", function () {
     [owner] = await hre.ethers.getSigners();
 
     oracle = await ethers.getContract("CoingeckoOracle");
+    oracleW3f = w3f.get("oracle");
 
     userArgs = {
       currency: "ethereum",
       oracle: oracle.address,
     };
-    storage = {};
   });
 
   it("canExec: true - First execution", async () => {
-    const { result } = await w3f.run("oracle", storage, userArgs);
+    const { result } = await oracleW3f.run({ userArgs });
 
     expect(result.canExec).to.equal(true);
 
@@ -49,7 +50,7 @@ describe("CoingeckoOracle Tests", function () {
   });
 
   it("canExec: false - After execution", async () => {
-    const { result } = await w3f.run("oracle", storage, userArgs);
+    const { result } = await oracleW3f.run({ userArgs });
     expect(result.canExec).to.equal(false);
 
     const message = (result as Web3FunctionResultNotExec).message;
@@ -60,7 +61,7 @@ describe("CoingeckoOracle Tests", function () {
     const ONE_HOUR = 60 * 60;
     await time.increase(ONE_HOUR);
 
-    const { result } = await w3f.run("oracle", storage, userArgs);
+    const { result } = await oracleW3f.run({ userArgs });
     expect(result.canExec).to.equal(true);
   });
 });
