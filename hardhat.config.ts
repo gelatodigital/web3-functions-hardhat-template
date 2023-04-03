@@ -26,32 +26,7 @@ const ETHERSCAN_KEY = process.env.ETHERSCAN_KEY;
 // ================================= CONFIG =========================================
 const config: HardhatUserConfig = {
   w3f: {
-    functions: {
-      helloWorld: { path: "./web3-functions/index.ts", userArgs: {} },
-      adboard: { path: "./web3-functions/examples/advertising-board/index.ts" },
-      event: {
-        path: "./web3-functions/examples/event-listener/index.ts",
-        userArgs: {
-          counter: "0x8F143A5D62de01EAdAF9ef16d4d3694380066D9F",
-          oracle: "0x71B9B0F6C999CBbB0FeF9c92B80D54e4973214da",
-        },
-      },
-      oracle: {
-        path: "./web3-functions/examples/oracle/index.ts",
-        userArgs: {
-          currency: "ethereum",
-          oracle: "0x71B9B0F6C999CBbB0FeF9c92B80D54e4973214da",
-        },
-      },
-      secrets: {
-        path: "./web3-functions/examples/secrets/index.ts",
-        userArgs: {
-          currency: "ethereum",
-          oracle: "0x71B9B0F6C999CBbB0FeF9c92B80D54e4973214da",
-        },
-      },
-      storage: { path: "./web3-functions/examples/storage/index.ts" },
-    },
+    rootDir: "./web3-functions",
     debug: false,
   },
 
