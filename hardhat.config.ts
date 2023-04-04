@@ -57,6 +57,11 @@ const config: HardhatUserConfig = {
       url: "https://arb1.arbitrum.io/rpc",
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
+    baseGoerli: {
+      chainId: 84531,
+      url: "https://goerli.base.org",
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
     bsc: {
       chainId: 56,
       url: "https://bsc-dataseed.binance.org/",
