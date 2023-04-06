@@ -8,6 +8,7 @@ const main = async () => {
   const adBoard = <AdvertisingBoard>(
     await ethers.getContract("AdvertisingBoard")
   );
+  const adBoardW3f = w3f.get("advertising-board");
 
   const [deployer] = await ethers.getSigners();
   const chainId = (await ethers.provider.getNetwork()).chainId;
@@ -16,7 +17,7 @@ const main = async () => {
 
   // Deploy Web3Function on IPFS
   console.log("Deploying Web3Function on IPFS...");
-  const cid = await w3f.deploy("adboard");
+  const cid = await adBoardW3f.deploy();
   console.log(`Web3Function IPFS CID: ${cid}`);
 
   // Create task using automate sdk

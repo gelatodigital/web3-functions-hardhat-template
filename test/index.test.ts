@@ -1,13 +1,13 @@
 import hre from "hardhat";
 import { expect } from "chai";
 import { before } from "mocha";
-import { W3fHardhatClass } from "@gelatonetwork/web3-functions-sdk/hardhat-plugin";
+import { Web3FunctionHardhat } from "@gelatonetwork/web3-functions-sdk/hardhat-plugin";
 const { deployments, w3f } = hre;
 
 describe("HelloWorld Tests", function () {
   this.timeout(0);
 
-  let helloWorld: W3fHardhatClass;
+  let helloWorld: Web3FunctionHardhat;
 
   before(async function () {
     await deployments.fixture();

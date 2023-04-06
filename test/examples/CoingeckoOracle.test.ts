@@ -9,7 +9,7 @@ import {
   Web3FunctionResultNotExec,
   Web3FunctionUserArgs,
 } from "@gelatonetwork/web3-functions-sdk";
-import { W3fHardhatClass } from "@gelatonetwork/web3-functions-sdk/hardhat-plugin";
+import { Web3FunctionHardhat } from "@gelatonetwork/web3-functions-sdk/hardhat-plugin";
 const { ethers, deployments, w3f } = hre;
 
 describe("CoingeckoOracle Tests", function () {
@@ -18,7 +18,7 @@ describe("CoingeckoOracle Tests", function () {
   let owner: SignerWithAddress;
 
   let oracle: CoingeckoOracle;
-  let oracleW3f: W3fHardhatClass;
+  let oracleW3f: Web3FunctionHardhat;
   let userArgs: Web3FunctionUserArgs;
 
   before(async function () {

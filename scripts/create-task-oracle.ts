@@ -6,6 +6,7 @@ const { ethers, w3f } = hre;
 
 const main = async () => {
   const oracle = <CoingeckoOracle>await ethers.getContract("CoingeckoOracle");
+  const oracleW3f = w3f.get("oracle");
 
   const [deployer] = await ethers.getSigners();
   const chainId = (await ethers.provider.getNetwork()).chainId;
@@ -14,7 +15,7 @@ const main = async () => {
 
   // Deploy Web3Function on IPFS
   console.log("Deploying Web3Function on IPFS...");
-  const cid = await w3f.deploy("oracle");
+  const cid = await oracleW3f.deploy();
   console.log(`Web3Function IPFS CID: ${cid}`);
 
   // Create task using automate sdk

@@ -61,7 +61,7 @@
     "*.*{ts,js}": "eslint -c .eslintrc.json"
   },
   "dependencies": {
-    "@gelatonetwork/automate-sdk": "^2.3.2-beta",
+    "@gelatonetwork/automate-sdk": "^2.3.3-beta",
     "@gelatonetwork/web3-functions-sdk": "^0.4.8",
     "ky": "^0.33.2"
   }
