@@ -9,6 +9,7 @@ import {
   Web3FunctionResultNotExec,
   Web3FunctionUserArgs,
 } from "@gelatonetwork/web3-functions-sdk";
+import { Web3FunctionHardhat } from "@gelatonetwork/web3-functions-sdk/hardhat-plugin";
 const { ethers, deployments, w3f } = hre;
 
 describe("RedstoneOracle Tests", function () {
@@ -17,8 +18,8 @@ describe("RedstoneOracle Tests", function () {
   let owner: SignerWithAddress;
 
   let oracle: RedstoneOracle;
+  let oracleW3f: Web3FunctionHardhat;
   let userArgs: Web3FunctionUserArgs;
-  let storage: { [key: string]: string };
 
   before(async function () {
     await deployments.fixture();
@@ -26,16 +27,16 @@ describe("RedstoneOracle Tests", function () {
 
     [owner] = await hre.ethers.getSigners();
     oracle = await ethers.getContract("RedstoneOracle");
+    oracleW3f = w3f.get("redstone");
 
     userArgs = {
       currency: "ETH",
       oracleAddress: oracle.address,
     };
-    storage = {};
   });
 
   it("Update oracle price on first execution", async () => {
-    const { result } = await w3f.run("redstone", storage, userArgs);
+    const { result } = await oracleW3f.run({ userArgs });
 
     expect(result.canExec).to.equal(true);
 
@@ -47,7 +48,7 @@ describe("RedstoneOracle Tests", function () {
   });
 
   it("Don't update when deviation is too small", async () => {
-    const { result } = await w3f.run("redstone", storage, userArgs);
+    const { result } = await oracleW3f.run({ userArgs });
     expect(result.canExec).to.equal(false);
 
     const message = (result as Web3FunctionResultNotExec).message;
