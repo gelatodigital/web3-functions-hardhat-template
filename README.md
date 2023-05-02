@@ -24,6 +24,8 @@ Web3 Functions are currently in private Beta and can only be used by whitelisted
 - [Hardhat Config](#hardhat-config)
 - [Write a Web3 Function](#write-a-web3-function)
 - [Test your web3 function](#test-your-web3-function)
+  - [Calling your web3 function](#calling-your-web3-function)
+  - [Writing unit test for your web3 function](#writing-unit-test-for-your-web3-function)
 - [Use User arguments](#use-user-arguments)
 - [Use State / Storage](#use-state--storage)
 - [Use user secrets](#use-user-secrets)
@@ -309,7 +311,7 @@ Web3Function.onRun(async (context: Web3FunctionContext) => {
 ```
 
 Test storage execution:<br/>
-`npx hardhat w3f storage --logs`
+`npx hardhat w3f-run storage --logs`
 
 You will see your updated key/values:
 
@@ -349,7 +351,7 @@ if (!coingeckoApi)
 Use `npx hardhat w3f-deploy W3FNAME` command to deploy your web3 function.
 
 Example:<br/>
-`npx hardhat w3f-deploy oracle --logs`
+`npx hardhat w3f-deploy oracle`
 
 The deployer will output your Web3Function IPFS CID, that you can use to create your task:
 
