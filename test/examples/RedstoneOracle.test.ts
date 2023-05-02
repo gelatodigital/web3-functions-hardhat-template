@@ -5,8 +5,7 @@ import { before } from "mocha";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { time } from "@nomicfoundation/hardhat-network-helpers";
 import {
-  Web3FunctionResultCanExec,
-  Web3FunctionResultNotExec,
+  Web3FunctionResultV2,
   Web3FunctionUserArgs,
 } from "@gelatonetwork/web3-functions-sdk";
 import { Web3FunctionHardhat } from "@gelatonetwork/web3-functions-sdk/hardhat-plugin";
@@ -36,12 +35,14 @@ describe("RedstoneOracle Tests", function () {
   });
 
   it("Update oracle price on first execution", async () => {
-    const { result } = await oracleW3f.run({ userArgs });
+    let { result } = await oracleW3f.run({ userArgs });
+    result = result as Web3FunctionResultV2;
 
     expect(result.canExec).to.equal(true);
+    if (!result.canExec) throw new Error("!result.canExec");
 
-    const calldata = (result as Web3FunctionResultCanExec).callData;
-    await owner.sendTransaction({ to: oracle.address, data: calldata });
+    const calldata = result.callData[0];
+    await owner.sendTransaction({ to: oracle.address, data: calldata.data });
 
     const storedPrice = await oracle.getStoredPrice();
     expect(storedPrice.gt(0)).to.be.true;
@@ -50,8 +51,9 @@ describe("RedstoneOracle Tests", function () {
   it("Don't update when deviation is too small", async () => {
     const { result } = await oracleW3f.run({ userArgs });
     expect(result.canExec).to.equal(false);
+    if (result.canExec) throw new Error("result.canExec");
 
-    const message = (result as Web3FunctionResultNotExec).message;
+    const message = result.message;
     expect(message).to.equal("No update: price deviation too small");
   });
 });

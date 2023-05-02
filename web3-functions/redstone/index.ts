@@ -14,7 +14,10 @@ const ORACLE_ABI = [
 ];
 
 Web3Function.onRun(async (context: Web3FunctionContext) => {
-  const { userArgs, provider } = context;
+  const { userArgs, multiChainProvider } = context;
+
+  const provider = multiChainProvider.default();
+
   const oracleAddress = userArgs.oracleAddress as string;
   const oracle = new Contract(oracleAddress, ORACLE_ABI, provider);
 
@@ -54,6 +57,6 @@ Web3Function.onRun(async (context: Web3FunctionContext) => {
   const { data } = await wrappedOracle.populateTransaction.updatePrice();
   return {
     canExec: true,
-    callData: data as string,
+    callData: [{ to: oracleAddress, data: data as string }],
   };
 });

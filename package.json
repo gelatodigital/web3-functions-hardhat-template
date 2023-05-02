@@ -62,7 +62,7 @@
   },
   "dependencies": {
     "@gelatonetwork/automate-sdk": "^2.3.3-beta",
-    "@gelatonetwork/web3-functions-sdk": "^0.4.8",
+    "@gelatonetwork/web3-functions-sdk": "^1.0.1-betatest",
     "@redstone-finance/evm-connector": "^0.0.22",
     "ky": "^0.33.2"
   }
