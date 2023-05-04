@@ -40,8 +40,10 @@ const main = async () => {
 
   // Set task specific secrets
   const secrets = oracleW3f.getSecrets();
-  await web3Function.secrets.set(secrets, taskId);
-  console.log(`Secrets set`);
+  if (Object.keys(secrets).length > 0) {
+    await web3Function.secrets.set(secrets, taskId);
+    console.log(`Secrets set`);
+  }
 };
 
 main()

@@ -324,7 +324,7 @@ Simulated Web3Function Storage update:
 
 ## Use user secrets
 
-1. Input up your secrets in `.env.w3f` file.
+1. Input your secrets in `.env` file in the same directory as your web3 function.
 
 ```
 COINGECKO_API=https://api.coingecko.com/api/v3
@@ -339,15 +339,8 @@ if (!coingeckoApi)
   return { canExec: false, message: `COINGECKO_API not set in secrets` };
 ```
 
-3. Store your secrets by using (Variables in `.env.w3f` will be stored):<br/> `yarn set-secrets`
-
-4. Test your Web3 Function using secrets:<br/>
+3. Test your Web3 Function using secrets:<br/>
    `npx hardhat w3f-run secrets --logs`
-
-5. View complete list of your secrets by using:<br/> `yarn list-secrets`
-
-6. To delete secrets, use:<br/> `yarn delete-secrets SECRET_KEY SECRET_KEY2`
-
 ## Deploy your Web3Function on IPFS
 
 Use `npx hardhat w3f-deploy W3FNAME` command to deploy your web3 function.
@@ -382,6 +375,17 @@ const { taskId, tx } = await automate.createTask({
   },
 });
 await tx.wait();
+```
+
+If your task utilizes secrets, you can set them after the task has been created.
+
+```typescript
+// Set task specific secrets
+  const secrets = oracleW3f.getSecrets();
+  if (Object.keys(secrets).length > 0) {
+    await web3Function.secrets.set(secrets, taskId);
+    console.log(`Secrets set`);
+  }
 ```
 
 Test it with our sample task creation script:<br/>
