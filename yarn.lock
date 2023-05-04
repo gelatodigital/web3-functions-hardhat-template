@@ -758,19 +758,19 @@
   optionalDependencies:
     "@trufflesuite/bigint-buffer" "1.1.9"
 
-"@gelatonetwork/automate-sdk@^2.5.0-betatest":
-  version "2.5.0-betatest"
-  resolved "https://registry.yarnpkg.com/@gelatonetwork/automate-sdk/-/automate-sdk-2.5.0-betatest.tgz#0c1e444589894387f25f43cdcfbcdfce57885020"
-  integrity sha512-Spb/Vkyr8zoJYTLtQ2YCGbYz0nUQXzOOJr7d88CJAzckvMgUwu2+rVkmo7CNcXwoyFmIqd2/Naro+aiVDsoBmg==
+"@gelatonetwork/automate-sdk@^2.6.0-betatest":
+  version "2.6.0-betatest"
+  resolved "https://registry.yarnpkg.com/@gelatonetwork/automate-sdk/-/automate-sdk-2.6.0-betatest.tgz#e7d678fbf69937910c3681d9e0020dab4648a978"
+  integrity sha512-e20/qTXWGmyAPA/8puJVLvvD83u31blmO9XQuDQiS8wUxTSeoOpqI4TORWOmpa49QB4Kk2el+Jn5cWgwF1lgGw==
   dependencies:
     axios "^1.2.2"
     ethers "^5.5.2"
     siwe "^1.1.6"
 
-"@gelatonetwork/web3-functions-sdk@^2.0.0-betatest":
-  version "2.0.0-betatest"
-  resolved "https://registry.yarnpkg.com/@gelatonetwork/web3-functions-sdk/-/web3-functions-sdk-2.0.0-betatest.tgz#d58ed0d64e6d4c47347b80a8415e10d50cfc0ed5"
-  integrity sha512-D0dP809leWP0RT3eD97H/0HmPWofOMszJEXfYnZhCq8oxApCbd3akYgYby4aLhPT5uZEbYCPxCrQh0ndF4GzOA==
+"@gelatonetwork/web3-functions-sdk@^2.0.1-betatest":
+  version "2.0.1-betatest"
+  resolved "https://registry.yarnpkg.com/@gelatonetwork/web3-functions-sdk/-/web3-functions-sdk-2.0.1-betatest.tgz#1a4256960da56fdc9aecc2a2a708d9588e15ada4"
+  integrity sha512-dgia3f5fifK5DyYXQQr4eX4A3sBebDbRGUaUZnE2wad7QOkFRBdR5Aa8Lquvjndz8UJLO/QvRy5OorAQ7BH74g==
   dependencies:
     "@types/dockerode" "^3.3.11"
     ajv "^8.11.0"

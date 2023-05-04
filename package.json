@@ -59,8 +59,8 @@
     "*.*{ts,js}": "eslint -c .eslintrc.json"
   },
   "dependencies": {
-    "@gelatonetwork/automate-sdk": "^2.5.0-betatest",
-    "@gelatonetwork/web3-functions-sdk": "^2.0.0-betatest",
+    "@gelatonetwork/automate-sdk": "^2.6.0-betatest",
+    "@gelatonetwork/web3-functions-sdk": "^2.0.1-betatest",
     "@redstone-finance/evm-connector": "^0.0.22",
     "ky": "^0.33.2"
   }
