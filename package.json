@@ -18,8 +18,6 @@
     "verify": "npx hardhat etherscan-verify",
     "create-task:adboard": "npx hardhat run ./scripts/create-task-adboard.ts",
     "create-task:oracle": "npx hardhat run ./scripts/create-task-oracle.ts",
-    "set-secrets": "ts-node ./scripts/set-secrets.ts",
-    "delete-secrets": "ts-node ./scripts/delete-secrets.ts",
     "list-secrets": "ts-node ./scripts/list-secrets.ts"
   },
   "license": "ISC",

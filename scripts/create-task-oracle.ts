@@ -1,5 +1,5 @@
 import hre from "hardhat";
-import { AutomateSDK } from "@gelatonetwork/automate-sdk";
+import { AutomateSDK, Web3Function } from "@gelatonetwork/automate-sdk";
 import { CoingeckoOracle } from "../typechain";
 
 const { ethers, w3f } = hre;
@@ -12,6 +12,7 @@ const main = async () => {
   const chainId = (await ethers.provider.getNetwork()).chainId;
 
   const automate = new AutomateSDK(chainId, deployer);
+  const web3Function = new Web3Function(chainId, deployer);
 
   // Deploy Web3Function on IPFS
   console.log("Deploying Web3Function on IPFS...");
@@ -36,6 +37,11 @@ const main = async () => {
   console.log(
     `> https://beta.app.gelato.network/task/${taskId}?chainId=${chainId}`
   );
+
+  // Set task specific secrets
+  const secrets = oracleW3f.getSecrets();
+  await web3Function.secrets.set(secrets, taskId);
+  console.log(`Secrets set`);
 };
 
 main()
