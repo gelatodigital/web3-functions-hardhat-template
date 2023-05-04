@@ -64,20 +64,15 @@ PRIVATE_KEY=
 
 In `hardhat.config.ts`, you can set up configurations for your Web3 Function runtime.
 
-- `functions`: Name of your web3 functions.
-  - `path`: File path of web3 function.
-  - `userArgs`: Default user arguments passed into web3 function. (For `npx hardhat w3f-run`)
-- `debug`: Run your web3 functions with debug mode on.
+  - `rootDir`: Directory which contains all web3 functions directories.
+  - `debug`: Run your web3 functions with debug mode on.
+  - `networks`: Provider of these networks will be injected into web3 function's multi chain provider.
 
 ```ts
   w3f: {
-    functions: {
-      helloWorld: {
-        path: "./web3-functions/index.ts",
-        userArgs: {}
-      },
-    },
+    rootDir: "./web3-functions",
     debug: false,
+    networks: ["mumbai", "goerli", "baseGoerli"],
   },
 ```
 
@@ -101,7 +96,9 @@ const ORACLE_ABI = [
 ];
 
 Web3Function.onRun(async (context: Web3FunctionContext) => {
-  const { userArgs, gelatoArgs, provider } = context;
+  const { userArgs, gelatoArgs, multiChainProvider } = context;
+
+  const provider = multiChainProvider.default();
 
   // Retrieve Last oracle update time
   const oracleAddress = "0x71B9B0F6C999CBbB0FeF9c92B80D54e4973214da";
@@ -111,7 +108,7 @@ Web3Function.onRun(async (context: Web3FunctionContext) => {
 
   // Check if it's ready for a new update
   const nextUpdateTime = lastUpdated + 300; // 5 min
-  const timestamp = gelatoArgs.blockTime;
+  const timestamp = (await provider.getBlock("latest")).timestamp;
   console.log(`Next oracle update: ${nextUpdateTime}`);
   if (timestamp < nextUpdateTime) {
     return { canExec: false, message: `Time not elapsed` };
@@ -131,7 +128,7 @@ Web3Function.onRun(async (context: Web3FunctionContext) => {
   // Return execution call data
   return {
     canExec: true,
-    callData: oracle.interface.encodeFunctionData("updatePrice", [price]),
+    callData: [{to: oracleAddress, data: oracle.interface.encodeFunctionData("updatePrice", [price])}],
   };
 });
 ```
@@ -152,12 +149,13 @@ Web3Function.onRun(async (context: Web3FunctionContext) => {
 
 ### Calling your web3 function
 
-- Use `npx hardhat w3f-run W3FNAME` command to test your function
+- Use `npx hardhat w3f-run W3FNAME` command to test your function (replace W3FNAME with the folder name containing your web3 function)
 
 - Options:
 
   - `--logs` Show internal Web3 Function logs
   - `--debug` Show Runtime debug messages
+  - `--network [NETWORK]` Set the default runtime network & provider. 
 
 If your web3 function has arguments, you can define them in [`hardhat.config.ts`](./hardhat.config.ts).
 
@@ -194,7 +192,7 @@ Web3Function Runtime stats:
 - Define your tests in `test/index.test.ts`
 - Use `yarn test` command to run unit test suite.
 
-Hardhat will run your tests in a forked environment by default. You can configure this in `hardhat.config.ts` or by passing a flag `yarn test --network NETWORK`.
+Hardhat will run your tests in a forked environment by default. You can configure this in `hardhat.config.ts`.
 
 ```json
 {
@@ -204,8 +202,9 @@ Hardhat will run your tests in a forked environment by default. You can configur
     hardhat: {
       forking: {
         url: `https://eth-goerli.g.alchemy.com/v2/${ALCHEMY_ID}`,
+        blockNumber: 8664000,
       },
-    }
+    },
   }
 }
 ```
@@ -217,6 +216,9 @@ Calling your web3 function:
 
 ```ts
 import hre from "hardhat";
+const { w3f } = hre;
+
+const oracleW3f = w3f.get("oracle");
 
 const userArgs = {
   currency: "ethereum",
@@ -225,10 +227,10 @@ const userArgs = {
 
 const storage = {};
 
-await hre.w3f.run("oracle", storage, userArgs);
+await oracleW3f.run({storage, userArgs});
 ```
 
-`userArgs` is optional here. When passed into `w3f.run`, it overrides the arguments defined in `hardhat.config.ts`
+`userArgs` and `storage` are optional here. When passed, it overrides the arguments defined in `userArgs.json` and `storage.json`.
 
 ## Use User arguments
 
@@ -259,20 +261,18 @@ Web3Function.onRun(async (context: Web3FunctionContext) => {
 });
 ```
 
-3. Populate `userArgs` in `hardhat.config.ts` and test your web3 function:
+3. Populate `userArgs` in `userArgs.json` and test your web3 function:
 
 ```json
-oracle: {
-  path: "./web3-functions/examples/oracle/index.ts",
-  userArgs: {
-    currency: "ethereum",
-    oracle: "0x71B9B0F6C999CBbB0FeF9c92B80D54e4973214da",
-  },
-},
+{
+  "currency": "ethereum",
+  "oracle": "0x71B9B0F6C999CBbB0FeF9c92B80D54e4973214da"
+}
+
 ```
 
 ```
-npx hardhat w3f-run oracle
+npx hardhat w3f-run oracle --logs
 ```
 
 ## Use State / Storage
@@ -289,7 +289,9 @@ import {
 } from "@gelatonetwork/web3-functions-sdk";
 
 Web3Function.onRun(async (context: Web3FunctionContext) => {
-  const { storage, provider } = context;
+  const { storage, multiChainProvider } = context;
+
+  const provider = multiChainProvider.default();
 
   // Use storage to retrieve previous state (stored values are always string)
   const lastBlockStr = (await storage.get("lastBlockNumber")) ?? "0";
