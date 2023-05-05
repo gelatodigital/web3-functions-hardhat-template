@@ -58,10 +58,6 @@ Web3Function.onRun(async (context: Web3FunctionContext) => {
         to: oracleAddress,
         data: oracle.interface.encodeFunctionData("updatePrice", [price]),
       },
-      {
-        to: oracleAddress,
-        data: oracle.interface.encodeFunctionData("updatePrice", [price]),
-      },
     ],
   };
 });

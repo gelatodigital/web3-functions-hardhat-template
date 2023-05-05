@@ -1,13 +1,9 @@
 import hre from "hardhat";
 import { AutomateSDK, Web3Function } from "@gelatonetwork/automate-sdk";
-import { AdvertisingBoard } from "../typechain";
 
 const { ethers, w3f } = hre;
 
 const main = async () => {
-  const adBoard = <AdvertisingBoard>(
-    await ethers.getContract("AdvertisingBoard")
-  );
   const adBoardW3f = w3f.get("advertising-board");
 
   const [deployer] = await ethers.getSigners();
