@@ -3,8 +3,5 @@
   "runtime": "js-1.0",
   "memory": 128,
   "timeout": 30,
-  "userArgs": {
-    "currency": "string",
-    "oracle": "string"
-  }
+  "userArgs": {}
 }

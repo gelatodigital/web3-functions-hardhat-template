@@ -137,7 +137,7 @@ Web3Function.onRun(async (context: Web3FunctionContext) => {
 
 ```json
 {
-  "web3FunctionVersion": "1.0.0",
+  "web3FunctionVersion": "2.0.0",
   "runtime": "js-1.0",
   "memory": 128,
   "timeout": 30,
@@ -238,7 +238,7 @@ await oracleW3f.run({storage, userArgs});
 
 ```json
 {
-  "web3FunctionVersion": "1.0.0",
+  "web3FunctionVersion": "2.0.0",
   "runtime": "js-1.0",
   "memory": 128,
   "timeout": 30,
@@ -280,7 +280,7 @@ npx hardhat w3f-run oracle --logs
 Web3Functions are stateless scripts, that will run in a new & empty memory context on every execution.
 If you need to manage some state variable, we provide a simple key/value store that you can access from your web3 function `context`.
 
-See the above example to read & update values from your storage:
+See the below example to read & update values from your storage:
 
 ```typescript
 import {
@@ -319,7 +319,7 @@ You will see your updated key/values:
 
 ```
 Simulated Web3Function Storage update:
- ✓ lastBlockNumber: '8663854'
+ ✓ lastBlockNumber: '8944652'
 ```
 
 ## Use user secrets
@@ -363,11 +363,8 @@ To create a task that runs your Web3 Function every minute, visit:
 Use the `automate-sdk` to easily create a new task (make sure you have your private_key in .env):
 
 ```typescript
-const { taskId, tx } = await automate.createTask({
+const { taskId, tx } = await automate.createBatchExecTask({
   name: "Web3Function - Eth Oracle",
-  execAddress: oracle.address,
-  execSelector: oracle.interface.getSighash("updatePrice"),
-  dedicatedMsgSender: true,
   web3FunctionHash: cid,
   web3FunctionArgs: {
     oracle: oracle.address,

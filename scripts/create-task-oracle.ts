@@ -21,11 +21,8 @@ const main = async () => {
 
   // Create task using automate sdk
   console.log("Creating automate task...");
-  const { taskId, tx } = await automate.createTask({
+  const { taskId, tx } = await automate.createBatchExecTask({
     name: "Web3Function - Eth Oracle",
-    execAddress: oracle.address,
-    execSelector: oracle.interface.getSighash("updatePrice"),
-    dedicatedMsgSender: true,
     web3FunctionHash: cid,
     web3FunctionArgs: {
       oracle: oracle.address,
