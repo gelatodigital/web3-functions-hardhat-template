@@ -17,8 +17,7 @@
     "test": "npx hardhat test",
     "verify": "npx hardhat etherscan-verify",
     "create-task:adboard": "npx hardhat run ./scripts/create-task-adboard.ts",
-    "create-task:oracle": "npx hardhat run ./scripts/create-task-oracle.ts",
-    "list-secrets": "ts-node ./scripts/list-secrets.ts"
+    "create-task:oracle": "npx hardhat run ./scripts/create-task-oracle.ts"
   },
   "license": "ISC",
   "devDependencies": {
