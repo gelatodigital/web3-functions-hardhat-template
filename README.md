@@ -194,7 +194,7 @@ Web3Function Runtime stats:
 
 Hardhat will run your tests in a forked environment by default. You can configure this in `hardhat.config.ts`.
 
-```json
+```typescript
 {
   defaultNetwork: "hardhat",
 
@@ -378,11 +378,11 @@ If your task utilizes secrets, you can set them after the task has been created.
 
 ```typescript
 // Set task specific secrets
-  const secrets = oracleW3f.getSecrets();
-  if (Object.keys(secrets).length > 0) {
-    await web3Function.secrets.set(secrets, taskId);
-    console.log(`Secrets set`);
-  }
+const secrets = oracleW3f.getSecrets();
+if (Object.keys(secrets).length > 0) {
+  await web3Function.secrets.set(secrets, taskId);
+  console.log(`Secrets set`);
+}
 ```
 
 Test it with our sample task creation script:<br/>
