@@ -6,6 +6,8 @@ import "@typechain/hardhat";
 import "@nomiclabs/hardhat-ethers";
 import "@nomiclabs/hardhat-waffle";
 import "hardhat-deploy";
+import "@matterlabs/hardhat-zksync-solc";
+import "@matterlabs/hardhat-zksync-verify";
 
 // ================================= TASKS =========================================
 
@@ -87,6 +89,14 @@ const config: HardhatUserConfig = {
       chainId: 137,
       url: "https://rpc-mainnet.maticvigil.com",
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
+    zksync: {
+      zksync: true,
+      url: "https://mainnet.era.zksync.io",
+      chainId: 324,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+      verifyURL:
+        "https://zksync2-mainnet-explorer.zksync.io/contract_verification",
     },
 
     // Staging

@@ -16,7 +16,9 @@ dist
 
 #hardhat
 artifacts
+artifacts-zk
 cache
+cache-zk
 coverage
 coverage.json
 deployments/localhost
