@@ -52,7 +52,10 @@ Web3Function.onRun(async (context: Web3FunctionContext) => {
       logs.push(...result);
       lastBlock = toBlock;
     } catch (err) {
-      return { canExec: false, message: `Rpc call failed: ${err.message}` };
+      return {
+        canExec: false,
+        message: `Rpc call failed: ${(err as Error).message}`,
+      };
     }
   }
 
