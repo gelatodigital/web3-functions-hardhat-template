@@ -2,7 +2,7 @@ import {
   Web3Function,
   Web3FunctionContext,
 } from "@gelatonetwork/web3-functions-sdk";
-import { utils } from "ethers";
+import { Contract } from "@ethersproject/contracts";
 import ky from "ky"; // we recommend using ky as axios doesn't support fetch by default
 
 const AD_BOARD_ABI = [
@@ -19,7 +19,7 @@ Web3Function.onRun(async (context: Web3FunctionContext) => {
     "0x28a0A1C63E7E8F0DAe5ad633fe232c12b489d5f0";
 
   const lastPost = Number(await storage.get("lastPost")) ?? 0;
-  const adBoardInterface = new utils.Interface(AD_BOARD_ABI);
+  const adBoardContract = new Contract(adBoardAddress, AD_BOARD_ABI);
 
   const nextPostTime = lastPost + 3600; // 1h
   const timestamp = (await provider.getBlock("latest")).timestamp;
@@ -49,7 +49,7 @@ Web3Function.onRun(async (context: Web3FunctionContext) => {
     callData: [
       {
         to: adBoardAddress,
-        data: adBoardInterface.encodeFunctionData("postMessage", [message]),
+        data: adBoardContract.encodeFunctionData("postMessage", [message]),
       },
     ],
   };
