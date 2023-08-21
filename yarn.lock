@@ -691,20 +691,20 @@
   optionalDependencies:
     "@trufflesuite/bigint-buffer" "1.1.9"
 
-"@gelatonetwork/automate-sdk@^2.16.0-beta":
-  version "2.16.0-beta"
-  resolved "https://registry.yarnpkg.com/@gelatonetwork/automate-sdk/-/automate-sdk-2.16.0-beta.tgz#d239afbfee18c8d82c4680be19eda8b2fd497d9c"
-  integrity sha512-1L2kBemDWsOCP0NCgXoYYihBshh+NVviXG6eta/g21CoLcgtGcOI2ufzLOm3unMM3Gv73kHpJ8VBobabdxv8Rw==
+"@gelatonetwork/automate-sdk@^2.17.0-beta":
+  version "2.17.0-beta"
+  resolved "https://registry.yarnpkg.com/@gelatonetwork/automate-sdk/-/automate-sdk-2.17.0-beta.tgz#239772432869ac5a849d5dce3d13558d973e98a9"
+  integrity sha512-4HCIV8h7b9n66EiZTqLZUyqwjnY1EYvxecIdg6bD5Ih/eXrRIrvMZtaD7qFqJZoiOz299nEjr9dtTVCDpjsmQA==
   dependencies:
-    axios "^1.2.2"
+    axios "^1.4.0"
     buffer "^6.0.3"
     ethers "^5.5.2"
     siwe "^1.1.6"
 
-"@gelatonetwork/web3-functions-sdk@^2.1.3":
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/@gelatonetwork/web3-functions-sdk/-/web3-functions-sdk-2.1.3.tgz#b52b802c7691d69bb1ce561f65e69d6358372c8f"
-  integrity sha512-3VfBSOSnxxr43YmIWtRv6i9udUHLoCbeyE7C8hjQoWNDaIVsVfYEC7uWxxY+1XuIvNwc8R5ha4k735fgYiWpKQ==
+"@gelatonetwork/web3-functions-sdk@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/@gelatonetwork/web3-functions-sdk/-/web3-functions-sdk-2.1.4.tgz#f9f415faa5f94979189c87be01b03928317efc1a"
+  integrity sha512-tGk7TBDk/KV5/ECcLtO8BpcENRlEX9AzDBU5F58YIvHQ3i8bBz8goxVnq3/gJ21lzwYSppvJ0RkUzNmQYF0Cgg==
   dependencies:
     "@ethersproject/address" "^5.7.0"
     "@ethersproject/contracts" "^5.7.0"
@@ -1864,15 +1864,6 @@ axios@^0.21.1:
   integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
   dependencies:
     follow-redirects "^1.14.0"
-
-axios@^1.2.2:
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-1.3.4.tgz#f5760cefd9cfb51fd2481acf88c05f67c4523024"
-  integrity sha512-toYm+Bsyl6VC5wSkfkbbNB6ROv7KY93PEBBL6xyDczaIHasAiv4wPqQ/c4RjoQzipxRD2W5g21cOqQulZ7rHwQ==
-  dependencies:
-    follow-redirects "^1.15.0"
-    form-data "^4.0.0"
-    proxy-from-env "^1.1.0"
 
 axios@^1.4.0:
   version "1.4.0"
