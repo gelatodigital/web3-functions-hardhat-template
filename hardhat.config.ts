@@ -2,12 +2,12 @@ import { HardhatUserConfig } from "hardhat/config";
 
 // PLUGINS
 import "@gelatonetwork/web3-functions-sdk/hardhat-plugin";
-import "@typechain/hardhat";
-import "@nomiclabs/hardhat-ethers";
-import "@nomiclabs/hardhat-waffle";
-import "hardhat-deploy";
 import "@matterlabs/hardhat-zksync-solc";
 import "@matterlabs/hardhat-zksync-verify";
+import "@nomiclabs/hardhat-ethers";
+import "@nomiclabs/hardhat-waffle";
+import "@typechain/hardhat";
+import "hardhat-deploy";
 
 // ================================= TASKS =========================================
 
@@ -80,6 +80,11 @@ const config: HardhatUserConfig = {
     fantom: {
       chainId: 250,
       url: `https://rpcapi.fantom.network/`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
+    gnosis: {
+      chainId: 100,
+      url: `https://gnosis-mainnet.public.blastapi.io`,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
     linea: {
