@@ -2,12 +2,12 @@ import { HardhatUserConfig } from "hardhat/config";
 
 // PLUGINS
 import "@gelatonetwork/web3-functions-sdk/hardhat-plugin";
-import "@typechain/hardhat";
-import "@nomiclabs/hardhat-ethers";
-import "@nomiclabs/hardhat-waffle";
-import "hardhat-deploy";
 import "@matterlabs/hardhat-zksync-solc";
 import "@matterlabs/hardhat-zksync-verify";
+import "@nomiclabs/hardhat-ethers";
+import "@nomiclabs/hardhat-waffle";
+import "@typechain/hardhat";
+import "hardhat-deploy";
 
 // ================================= TASKS =========================================
 
@@ -62,9 +62,9 @@ const config: HardhatUserConfig = {
       url: "https://arb1.arbitrum.io/rpc",
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
-    baseGoerli: {
-      chainId: 84531,
-      url: "https://goerli.base.org",
+    base: {
+      url: `https://mainnet.base.org`,
+      chainId: 8453,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
     bsc: {
@@ -82,6 +82,11 @@ const config: HardhatUserConfig = {
       url: `https://rpcapi.fantom.network/`,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
+    gnosis: {
+      chainId: 100,
+      url: `https://gnosis-mainnet.public.blastapi.io`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
     linea: {
       url: `https://linea-mainnet.infura.io/v3/${INFURA_ID}`,
       chainId: 59144,
@@ -97,6 +102,11 @@ const config: HardhatUserConfig = {
       url: "https://rpc-mainnet.maticvigil.com",
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
+    polygonzk: {
+      url: "https://zkevm-rpc.com",
+      chainId: 1101,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
     zksync: {
       zksync: true,
       url: "https://mainnet.era.zksync.io",
@@ -110,6 +120,11 @@ const config: HardhatUserConfig = {
     arbgoerli: {
       chainId: 421613,
       url: `https://arb-goerli.g.alchemy.com/v2/${ALCHEMY_ID}`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
+    baseGoerli: {
+      chainId: 84531,
+      url: "https://goerli.base.org",
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
     goerli: {
