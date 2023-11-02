@@ -137,6 +137,16 @@ const config: HardhatUserConfig = {
       url: `https://polygon-mumbai.g.alchemy.com/v2/${ALCHEMY_ID}`,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
+    sepolia: {
+      chainId: 11155111,
+      url: `https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_ID}`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
+    zkatana: {
+      chainId: 1261120,
+      url: "https://rpc.zkatana.gelato.digital",
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
   },
 
   verify: {
