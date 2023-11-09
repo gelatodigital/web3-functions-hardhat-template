@@ -127,6 +127,11 @@ const config: HardhatUserConfig = {
       url: "https://goerli.base.org",
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
+    geloptestnet: {
+      chainId: 42069,
+      url: `https://rpc.op-testnet.gelato.digital`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
     goerli: {
       chainId: 5,
       url: `https://eth-goerli.g.alchemy.com/v2/${ALCHEMY_ID}`,
@@ -140,6 +145,11 @@ const config: HardhatUserConfig = {
     sepolia: {
       chainId: 11155111,
       url: `https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_ID}`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
+    unreal: {
+      chainId: 18231,
+      url: `https://rpc.unreal.gelato.digital`,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
     zkatana: {
