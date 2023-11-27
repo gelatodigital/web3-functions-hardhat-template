@@ -1,5 +1,9 @@
+import {
+  AutomateSDK,
+  TriggerType,
+  Web3Function,
+} from "@gelatonetwork/automate-sdk";
 import hre from "hardhat";
-import { AutomateSDK, Web3Function } from "@gelatonetwork/automate-sdk";
 
 const { ethers, w3f } = hre;
 
@@ -24,6 +28,10 @@ const main = async () => {
     name: "Web3Function - Ad Board",
     web3FunctionHash: cid,
     web3FunctionArgs: {},
+    trigger: {
+      interval: 60 * 1000,
+      type: TriggerType.TIME,
+    },
   });
 
   await tx.wait();
