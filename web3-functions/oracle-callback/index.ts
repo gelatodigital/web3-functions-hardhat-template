@@ -35,9 +35,17 @@ async function sendSlackAlert(message: string) {
 
 //Web3 Function onFail callback
 Web3Function.onFail(async (context: Web3FunctionFailContext) => {
-  const { userArgs, reason } = context;
-  let alertMessage = `Web3 Function Failed. Reason: ${reason}`;
+  const { userArgs, reason, secrets } = context;
 
+  ///// SECRETS////////
+  // SECRETS_SENGRID_API ---> SENGRID_API - APIKEY
+  // SECRETS_FROM_EMAIL ---> EMAIL - Address from send e mails
+  // SECRETS_TO_EMAIL ---> EMAIL - Address to send e mails
+  const apikey = (await secrets.get("SENGRID_API")) as string;
+  const from = (await secrets.get("FROM_EMAIL")) as string;
+  const to = (await secrets.get("TO_EMAIL")) as string;
+
+  let alertMessage = `Web3 Function Failed. Reason: ${reason}`;
   console.log("userArgs: ", userArgs.canExec);
 
   if (reason === "ExecutionReverted") {
@@ -52,14 +60,32 @@ Web3Function.onFail(async (context: Web3FunctionFailContext) => {
     console.log(`onFail: ${reason}`);
   }
 
-  // Send Slack alert
-  await sendSlackAlert(alertMessage);
+  // Check the type of alert specified in userArgs
+  const alertType = userArgs.onFailAlertType as string | undefined;
+
+  // Send Slack alert if specified
+  if (alertType === "slack" || alertType === "both") {
+    await sendSlackAlert(alertMessage);
+  }
+
+  // Send email alert if specified
+  if (alertType === "email" || alertType === "both") {
+    const mailOptions: SendmailOptions = {
+      apikey: apikey, // Replace with your actual API key
+      from: from, // Replace with your sender email
+      to: to, // Replace with your receiver email
+      subject: "Web3 Function Execution Failure",
+      text: alertMessage,
+    };
+    await sendmail(mailOptions);
+  }
 });
 
 Web3Function.onRun(async (context: Web3FunctionContext) => {
   const { userArgs, multiChainProvider } = context;
 
   const provider = multiChainProvider.default();
+
   console.log(`Provider: ${provider.connection.url}`);
   // Retrieve Last oracle update time
   const oracleAddress =
@@ -108,3 +134,32 @@ Web3Function.onRun(async (context: Web3FunctionContext) => {
     ],
   };
 });
+
+interface SendmailOptions {
+  apikey: string;
+  from: string;
+  to: string;
+  subject: string;
+  text: string;
+}
+
+// Function to send email alerts using SendGrid
+async function sendmail(options: SendmailOptions) {
+  try {
+    await ky.post("https://api.sendgrid.com/v3/mail/send", {
+      headers: {
+        Authorization: `Bearer ${options.apikey}`,
+        "Content-Type": "application/json",
+      },
+      json: {
+        personalizations: [{ to: [{ email: options.to }] }],
+        from: { email: options.from },
+        subject: options.subject,
+        content: [{ type: "text/plain", value: options.text }],
+      },
+    });
+    console.log("Email sent successfully.");
+  } catch (error) {
+    console.error("Failed to send email:", error);
+  }
+}
