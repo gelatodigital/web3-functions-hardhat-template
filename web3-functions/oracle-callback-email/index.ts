@@ -36,19 +36,6 @@ async function sendmail(options: SendmailOptions) {
   }
 }
 
-// Function to send Slack alerts
-async function sendSlackAlert(message: string) {
-  // Add your Slack Webhook URL
-  const SLACK_WEBHOOK_URL = "YOUR_SLACK_WEBHOOK_URL";
-  try {
-    await ky.post(SLACK_WEBHOOK_URL, {
-      json: { text: message },
-    });
-  } catch (error) {
-    console.error("Failed to send Slack alert:", error);
-  }
-}
-
 // Helper function to fetch current price from coingecko
 async function getCurrentPrice(currency: string): Promise<number> {
   try {
@@ -93,10 +80,6 @@ Web3Function.onSuccess(async (context: Web3FunctionSuccessContext) => {
 Web3Function.onFail(async (context: Web3FunctionFailContext) => {
   const { userArgs, reason, secrets } = context;
 
-  ///// SECRETS////////
-  // SECRETS_SENGRID_API ---> SENGRID_API - APIKEY
-  // SECRETS_FROM_EMAIL ---> EMAIL - Address from send e mails
-  // SECRETS_TO_EMAIL ---> EMAIL - Address to send e mails
   const apikey = (await secrets.get("SENGRID_API")) as string;
   const from = (await secrets.get("FROM_EMAIL")) as string;
   const to = (await secrets.get("TO_EMAIL")) as string;
@@ -116,25 +99,14 @@ Web3Function.onFail(async (context: Web3FunctionFailContext) => {
     console.log(`onFail: ${reason}`);
   }
 
-  // Check the type of alert specified in userArgs
-  const alertType = userArgs.onFailAlertType as string | undefined;
-
-  // Send Slack alert if specified
-  if (alertType === "slack" || alertType === "both") {
-    await sendSlackAlert(alertMessage);
-  }
-
-  // Send email alert if specified
-  if (alertType === "email" || alertType === "both") {
-    const mailOptions: SendmailOptions = {
-      apikey: apikey,
-      from: from,
-      to: to,
-      subject: "Web3 Function Execution Failure",
-      text: alertMessage,
-    };
-    await sendmail(mailOptions);
-  }
+  const mailOptions: SendmailOptions = {
+    apikey: apikey,
+    from: from,
+    to: to,
+    subject: "Web3 Function Execution Failure",
+    text: alertMessage,
+  };
+  await sendmail(mailOptions);
 });
 
 Web3Function.onRun(async (context: Web3FunctionContext) => {
