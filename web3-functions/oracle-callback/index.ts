@@ -7,23 +7,39 @@ import {
 import { Contract } from "@ethersproject/contracts";
 import ky from "ky"; // we recommend using ky as axios doesn't support fetch by default
 
-const ORACLE_ABI = [
-  "function lastUpdated() external view returns(uint256)",
-  "function updatePrice(uint256)",
-];
+interface SendmailOptions {
+  apikey: string;
+  from: string;
+  to: string;
+  subject: string;
+  text: string;
+}
 
-//Web3 Function onSuccess callback
-Web3Function.onSuccess(async (context: Web3FunctionSuccessContext) => {
-  const { userArgs, transactionHash } = context;
-  console.log("userArgs: ", userArgs.canExec);
-  console.log("onSuccess: txHash: ", transactionHash);
-});
-
-// Add your Slack Webhook URL
-const SLACK_WEBHOOK_URL = "YOUR_SLACK_WEBHOOK_URL";
+// Function to send email alerts using SendGrid
+async function sendmail(options: SendmailOptions) {
+  try {
+    await ky.post("https://api.sendgrid.com/v3/mail/send", {
+      headers: {
+        Authorization: `Bearer ${options.apikey}`,
+        "Content-Type": "application/json",
+      },
+      json: {
+        personalizations: [{ to: [{ email: options.to }] }],
+        from: { email: options.from },
+        subject: options.subject,
+        content: [{ type: "text/plain", value: options.text }],
+      },
+    });
+    console.log("Email sent successfully.");
+  } catch (error) {
+    console.error("Failed to send email:", error);
+  }
+}
 
 // Function to send Slack alerts
 async function sendSlackAlert(message: string) {
+  // Add your Slack Webhook URL
+  const SLACK_WEBHOOK_URL = "YOUR_SLACK_WEBHOOK_URL";
   try {
     await ky.post(SLACK_WEBHOOK_URL, {
       json: { text: message },
@@ -32,6 +48,46 @@ async function sendSlackAlert(message: string) {
     console.error("Failed to send Slack alert:", error);
   }
 }
+
+// Helper function to fetch current price from coingecko
+async function getCurrentPrice(currency: string): Promise<number> {
+  try {
+    const coingeckoApi = `https://api.coingecko.com/api/v3/simple/price?ids=${currency}&vs_currencies=usd`;
+    const priceData = (await ky
+      .get(coingeckoApi, { timeout: 5000, retry: 0 })
+      .json()) as { [key: string]: { usd: number } };
+    return Math.floor(priceData[currency].usd);
+  } catch (err) {
+    console.error(`Error fetching price for ${currency}:`, err);
+    throw new Error("Coingecko call failed");
+  }
+}
+
+const ORACLE_ABI = [
+  "function lastUpdated() external view returns(uint256)",
+  "function updatePrice(uint256)",
+];
+
+//Web3 Function onSuccess callback
+Web3Function.onSuccess(async (context: Web3FunctionSuccessContext) => {
+  const { userArgs, transactionHash, storage } = context;
+  console.log("userArgs: ", userArgs.canExec);
+  console.log("onSuccess: txHash: ", transactionHash);
+
+  const currency = (userArgs.currency as string) ?? "ethereum";
+  let price = 0;
+
+  try {
+    const price = await getCurrentPrice(currency);
+    console.log(`Current Price: ${price}`);
+    await storage.set("lastPrice", price.toString());
+  } catch (err) {
+    console.error("Failed to update price:", err);
+  }
+
+  // Update storage with the current price
+  await storage.set("lastPrice", price.toString());
+});
 
 //Web3 Function onFail callback
 Web3Function.onFail(async (context: Web3FunctionFailContext) => {
@@ -71,9 +127,9 @@ Web3Function.onFail(async (context: Web3FunctionFailContext) => {
   // Send email alert if specified
   if (alertType === "email" || alertType === "both") {
     const mailOptions: SendmailOptions = {
-      apikey: apikey, // Replace with your actual API key
-      from: from, // Replace with your sender email
-      to: to, // Replace with your receiver email
+      apikey: apikey,
+      from: from,
+      to: to,
       subject: "Web3 Function Execution Failure",
       text: alertMessage,
     };
@@ -112,12 +168,7 @@ Web3Function.onRun(async (context: Web3FunctionContext) => {
   const currency = (userArgs.currency as string) ?? "ethereum";
   let price = 0;
   try {
-    const coingeckoApi = `https://api.coingecko.com/api/v3/simple/price?ids=${currency}&vs_currencies=usd`;
-
-    const priceData: { [key: string]: { usd: number } } = await ky
-      .get(coingeckoApi, { timeout: 5_000, retry: 0 })
-      .json();
-    price = Math.floor(priceData[currency].usd);
+    price = await getCurrentPrice(currency);
   } catch (err) {
     return { canExec: false, message: `Coingecko call failed` };
   }
@@ -134,32 +185,3 @@ Web3Function.onRun(async (context: Web3FunctionContext) => {
     ],
   };
 });
-
-interface SendmailOptions {
-  apikey: string;
-  from: string;
-  to: string;
-  subject: string;
-  text: string;
-}
-
-// Function to send email alerts using SendGrid
-async function sendmail(options: SendmailOptions) {
-  try {
-    await ky.post("https://api.sendgrid.com/v3/mail/send", {
-      headers: {
-        Authorization: `Bearer ${options.apikey}`,
-        "Content-Type": "application/json",
-      },
-      json: {
-        personalizations: [{ to: [{ email: options.to }] }],
-        from: { email: options.from },
-        subject: options.subject,
-        content: [{ type: "text/plain", value: options.text }],
-      },
-    });
-    console.log("Email sent successfully.");
-  } catch (error) {
-    console.error("Failed to send email:", error);
-  }
-}
