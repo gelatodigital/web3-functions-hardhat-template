@@ -57,12 +57,11 @@ const ORACLE_ABI = [
 
 //Web3 Function onSuccess callback
 Web3Function.onSuccess(async (context: Web3FunctionSuccessContext) => {
-  const { userArgs, transactionHash, storage } = context;
-  console.log("userArgs: ", userArgs.canExec);
+  const { userArgs, storage, transactionHash } = context;
   console.log("onSuccess: txHash: ", transactionHash);
 
   const currency = (userArgs.currency as string) ?? "ethereum";
-  let price = 0;
+  console.log("currency: ", currency);
 
   try {
     const price = await getCurrentPrice(currency);
@@ -71,9 +70,6 @@ Web3Function.onSuccess(async (context: Web3FunctionSuccessContext) => {
   } catch (err) {
     console.error("Failed to update price:", err);
   }
-
-  // Update storage with the current price
-  await storage.set("lastPrice", price.toString());
 });
 
 //Web3 Function onFail callback
