@@ -8,11 +8,9 @@ import { Contract } from "@ethersproject/contracts";
 import ky from "ky"; // we recommend using ky as axios doesn't support fetch by default
 
 // Function to send Slack alerts
-async function sendSlackAlert(message: string) {
-  // Add your Slack Webhook URL
-  const SLACK_WEBHOOK_URL = "YOUR_SLACK_WEBHOOK_URL";
+async function sendSlackAlert(message: string, webHookUrl: string) {
   try {
-    await ky.post(SLACK_WEBHOOK_URL, {
+    await ky.post(webHookUrl, {
       json: { text: message },
     });
   } catch (error) {
@@ -64,7 +62,13 @@ Web3Function.onSuccess(async (context: Web3FunctionSuccessContext) => {
 Web3Function.onFail(async (context: Web3FunctionFailContext) => {
   const { userArgs, reason } = context;
 
-  let alertMessage = `Web3 Function Failed. Reason: ${reason}`;
+  const slackWebhookUrl = await context.secrets.get("SLACK_WEBHOOK_URL");
+  if (!slackWebhookUrl) {
+    console.error("SLACK_WEBHOOK_URL not set in secrets");
+    return;
+  }
+
+  let alertMessage = `Transaction Failed. Reason: ${reason}`;
   console.log("userArgs: ", userArgs.canExec);
 
   if (reason === "ExecutionReverted") {
@@ -80,7 +84,7 @@ Web3Function.onFail(async (context: Web3FunctionFailContext) => {
   }
 
   // Send Slack alert if specified
-  await sendSlackAlert(alertMessage);
+  await sendSlackAlert(alertMessage, slackWebhookUrl);
 });
 
 Web3Function.onRun(async (context: Web3FunctionContext) => {
