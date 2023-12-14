@@ -60,7 +60,7 @@ Web3Function.onSuccess(async (context: Web3FunctionSuccessContext) => {
 
 //Web3 Function onFail callback
 Web3Function.onFail(async (context: Web3FunctionFailContext) => {
-  const { userArgs, reason } = context;
+  const { reason } = context;
 
   const slackWebhookUrl = await context.secrets.get("SLACK_WEBHOOK_URL");
   if (!slackWebhookUrl) {
@@ -69,7 +69,6 @@ Web3Function.onFail(async (context: Web3FunctionFailContext) => {
   }
 
   let alertMessage = `Transaction Failed. Reason: ${reason}`;
-  console.log("userArgs: ", userArgs.canExec);
 
   if (reason === "ExecutionReverted") {
     alertMessage += ` TxHash: ${context.transactionHash}`;
