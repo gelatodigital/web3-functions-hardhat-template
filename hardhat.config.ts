@@ -32,7 +32,7 @@ const config: HardhatUserConfig = {
   w3f: {
     rootDir: "./web3-functions",
     debug: false,
-    networks: ["mumbai", "goerli", "baseGoerli"], //(multiChainProvider) injects provider for these networks
+    networks: ["sepolia", "baseGoerli"], //(multiChainProvider) injects provider for these networks
   },
 
   namedAccounts: {
@@ -45,8 +45,9 @@ const config: HardhatUserConfig = {
 
   networks: {
     hardhat: {
+      chainId: 31337,
       forking: {
-        url: `https://eth-goerli.g.alchemy.com/v2/${ALCHEMY_ID}`,
+        url: `https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_ID}`,
         blockNumber: 8664000,
       },
     },
@@ -127,6 +128,11 @@ const config: HardhatUserConfig = {
       url: "https://goerli.base.org",
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
+    geloptestnet: {
+      chainId: 42069,
+      url: `https://rpc.op-testnet.gelato.digital`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
     goerli: {
       chainId: 5,
       url: `https://eth-goerli.g.alchemy.com/v2/${ALCHEMY_ID}`,
@@ -135,6 +141,21 @@ const config: HardhatUserConfig = {
     mumbai: {
       chainId: 80001,
       url: `https://polygon-mumbai.g.alchemy.com/v2/${ALCHEMY_ID}`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
+    sepolia: {
+      chainId: 11155111,
+      url: `https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_ID}`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
+    unreal: {
+      chainId: 18231,
+      url: `https://rpc.unreal.gelato.digital`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
+    zkatana: {
+      chainId: 1261120,
+      url: "https://rpc.zkatana.gelato.digital",
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
   },

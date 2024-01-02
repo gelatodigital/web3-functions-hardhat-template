@@ -1,0 +1,38 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/examples/AdvertisingBoard.sol": {
+      "content": "// SPDX-License-Identifier: UNLICENSED\r\npragma solidity ^0.8.0;\r\n\r\ncontract AdvertisingBoard {\r\n    IOpsProxyFactory public immutable opsProxyFactory;\r\n    mapping(address => string) public messages;\r\n\r\n    constructor(IOpsProxyFactory _opsProxyFactory) {\r\n        opsProxyFactory = _opsProxyFactory;\r\n    }\r\n\r\n    function postMessage(string calldata _message) external {\r\n        messages[msg.sender] = _message;\r\n    }\r\n\r\n    function viewMessage(address _eoa) external view returns (string memory) {\r\n        (address dedicatedMsgSender, ) = opsProxyFactory.getProxyOf(_eoa);\r\n\r\n        return messages[dedicatedMsgSender];\r\n    }\r\n}\r\n\r\ninterface IOpsProxyFactory {\r\n    /**\r\n     * @return address Proxy address owned by account.\r\n     * @return bool Whether if proxy is deployed\r\n     */\r\n    function getProxyOf(address account) external view returns (address, bool);\r\n}\r\n"
+    },
+    "contracts/examples/CoingeckoOracle.sol": {
+      "content": "// SPDX-License-Identifier: UNLICENSED\r\npragma solidity ^0.8.0;\r\n\r\ncontract CoingeckoOracle {\r\n    uint256 public price;\r\n    uint256 public lastUpdated;\r\n\r\n    event PriceUpdated(uint256 indexed timeStamp, uint256 price);\r\n\r\n    function updatePrice(uint256 _price) external {\r\n        price = _price;\r\n        lastUpdated = block.timestamp;\r\n\r\n        emit PriceUpdated(block.timestamp, _price);\r\n    }\r\n}\r\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}
