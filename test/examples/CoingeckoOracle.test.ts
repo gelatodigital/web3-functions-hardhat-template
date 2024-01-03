@@ -19,7 +19,7 @@ describe("CoingeckoOracle Tests", function () {
   let oracle: CoingeckoOracle;
   let oracleW3f: Web3FunctionHardhat;
   let userArgs: Web3FunctionUserArgs;
-
+  
   before(async function () {
     await deployments.fixture();
 
@@ -35,8 +35,10 @@ describe("CoingeckoOracle Tests", function () {
   });
 
   it("canExec: true - First execution", async () => {
-    let { result } = await oracleW3f.run({ userArgs });
+    let { result } = await oracleW3f.run("onRun", { userArgs });
     result = result as Web3FunctionResultV2;
+
+    console.log(result);
 
     expect(result.canExec).to.equal(true);
     if (!result.canExec) throw new Error("!result.canExec");
@@ -51,7 +53,7 @@ describe("CoingeckoOracle Tests", function () {
   });
 
   it("canExec: false - After execution", async () => {
-    let { result } = await oracleW3f.run({ userArgs });
+    let { result } = await oracleW3f.run("onRun", { userArgs });
     result = result as Web3FunctionResultV2;
 
     expect(result.canExec).to.equal(false);
@@ -65,7 +67,7 @@ describe("CoingeckoOracle Tests", function () {
     const ONE_HOUR = 60 * 60;
     await time.increase(ONE_HOUR);
 
-    const { result } = await oracleW3f.run({ userArgs });
+    const { result } = await oracleW3f.run("onRun", { userArgs });
     expect(result.canExec).to.equal(true);
   });
 });
