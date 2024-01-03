@@ -1,5 +1,9 @@
+import {
+  AutomateSDK,
+  TriggerType,
+  Web3Function,
+} from "@gelatonetwork/automate-sdk";
 import hre from "hardhat";
-import { AutomateSDK, Web3Function } from "@gelatonetwork/automate-sdk";
 import { CoingeckoOracle } from "../typechain";
 
 const { ethers, w3f } = hre;
@@ -27,6 +31,10 @@ const main = async () => {
     web3FunctionArgs: {
       oracle: oracle.address,
       currency: "ethereum",
+    },
+    trigger: {
+      interval: 60 * 1000,
+      type: TriggerType.TIME,
     },
   });
   await tx.wait();
