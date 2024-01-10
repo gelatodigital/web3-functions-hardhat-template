@@ -128,6 +128,11 @@ const config: HardhatUserConfig = {
       url: "https://goerli.base.org",
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
+    gelopcelestiatestnet: {
+      chainId: 123420111,
+      url: `https://rpc.op-celestia-testnet.gelato.digital`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
     geloptestnet: {
       chainId: 42069,
       url: `https://rpc.op-testnet.gelato.digital`,
