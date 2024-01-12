@@ -32,7 +32,7 @@ const config: HardhatUserConfig = {
   w3f: {
     rootDir: "./web3-functions",
     debug: false,
-    networks: ["mumbai", "goerli", "baseGoerli"], //(multiChainProvider) injects provider for these networks
+    networks: ["sepolia", "baseGoerli"], //(multiChainProvider) injects provider for these networks
   },
 
   namedAccounts: {
@@ -47,7 +47,7 @@ const config: HardhatUserConfig = {
     hardhat: {
       chainId: 31337,
       forking: {
-        url: `https://eth-goerli.g.alchemy.com/v2/${ALCHEMY_ID}`,
+        url: `https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_ID}`,
         blockNumber: 8664000,
       },
     },

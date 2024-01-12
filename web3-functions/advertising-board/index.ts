@@ -4,11 +4,14 @@ import {
 } from "@gelatonetwork/web3-functions-sdk";
 import { Contract } from "@ethersproject/contracts";
 import ky from "ky"; // we recommend using ky as axios doesn't support fetch by default
+import { Interface } from "@ethersproject/abi";
 
 const AD_BOARD_ABI = [
   "function postMessage(string)",
   "function viewMessage(address)",
 ];
+
+const adBoardInterface = new Interface(AD_BOARD_ABI);
 
 Web3Function.onRun(async (context: Web3FunctionContext) => {
   const { userArgs, storage, multiChainProvider } = context;
@@ -49,7 +52,7 @@ Web3Function.onRun(async (context: Web3FunctionContext) => {
     callData: [
       {
         to: adBoardAddress,
-        data: adBoardContract.encodeFunctionData("postMessage", [message]),
+        data: adBoardInterface.encodeFunctionData("postMessage", [message]),
       },
     ],
   };
