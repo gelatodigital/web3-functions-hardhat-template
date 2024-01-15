@@ -20,9 +20,9 @@ import assert from "assert";
 
 // Process Env Variables
 const ALCHEMY_ID = process.env.ALCHEMY_ID;
-assert.ok(ALCHEMY_ID, "no Alchemy ID in process.env");
+// assert.ok(ALCHEMY_ID, "no Alchemy ID in process.env");
 const INFURA_ID = process.env.INFURA_ID;
-assert.ok(INFURA_ID, "no Infura ID in process.env");
+// assert.ok(INFURA_ID, "no Infura ID in process.env");
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const ETHERSCAN_KEY = process.env.ETHERSCAN_KEY;
@@ -32,7 +32,7 @@ const config: HardhatUserConfig = {
   w3f: {
     rootDir: "./web3-functions",
     debug: false,
-    networks: ["sepolia", "baseGoerli"], //(multiChainProvider) injects provider for these networks
+    networks: ["ethereum", "sepolia", "baseGoerli"], //(multiChainProvider) injects provider for these networks
   },
 
   namedAccounts: {
