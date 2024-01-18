@@ -1,4 +1,4 @@
-Web3 Event Listener and Webhook Notifier
+# Web3 Event Listener and Webhook Notifier
 
 This project sets up a Web3 function to listen for specific smart contract events and sends a notification to a configured webhook URL when those events occur.
 
