@@ -1,6 +1,0 @@
-{
-  "targetContract": "0x8F143A5D62de01EAdAF9ef16d4d3694380066D9F",
-  "event": "",
-  "filter": "",
-  "webhookUrl": "http://localhost:3000/"
-}
