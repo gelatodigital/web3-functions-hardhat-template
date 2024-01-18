@@ -8,7 +8,8 @@ import hre from "hardhat";
 const { ethers, w3f } = hre;
 
 const main = async () => {
-  const eventTest = w3f.get("event-test");
+  const eventTest = w3f.get("event-filter-webhook");
+  const userArgs = eventTest.getUserArgs();
 
   const [deployer] = await ethers.getSigners();
   const chainId = (await ethers.provider.getNetwork()).chainId;
@@ -23,30 +24,32 @@ const main = async () => {
 
   // Create task using automate sdk
   console.log("Creating automate task...");
-  const addressA = "0x23e359eCAB56210f4b8B559218C4d27A85b052b8";
 
-  //This is native usdc on polygon mumbai by circle:
-  //https://developers.circle.com/stablecoins/docs/usdc-on-test-networks
-  // Faucet: https://faucet.circle.com/?_gl=1*1b3o0nq*_ga*MTU4OTc0MDM0My4xNzA0ODc4NDM3*_ga_GJDVPCQNRV*MTcwNTU1MjI1My4zLjEuMTcwNTU1MjI4NS4yOC4wLjA.
-  const nativeUsdc_contract = "0x9999f7fea5938fd3b1e26a12c3f2fb024e194f97";
-  const nativeUsdc_eABI = [
-    "event Transfer(address indexed from, address indexed to, uint256 value)",
-  ];
-  const usdcInterface = new ethers.utils.Interface(nativeUsdc_eABI);
+  console.log(userArgs.event);
+  const contractInterface = new ethers.utils.Interface([
+    userArgs.event as string,
+  ]);
 
   const { taskId, tx } = await automate.createBatchExecTask({
     name: "Web3Function - Event Filter USDC",
     web3FunctionHash: cid,
+    web3FunctionArgs: {
+      event: userArgs.event as string,
+      eventTopic: userArgs.eventTopic as string,
+      target: userArgs.target as string,
+      filter: userArgs.filter as string,
+      webhookUrl: userArgs.webhookUrl as string,
+    },
     trigger: {
       type: TriggerType.EVENT,
       filter: {
-        address: nativeUsdc_contract,
+        address: userArgs.target as string,
         topics: [
-          [usdcInterface.getEventTopic("Transfer")],
-          [ethers.utils.hexZeroPad(addressA, 32)],
+          [contractInterface.getEventTopic(userArgs.eventTopic as string)],
+          [ethers.utils.hexZeroPad(userArgs.filter as string, 32)],
         ],
       },
-      blockConfirmations: 5,
+      blockConfirmations: 0,
     },
   });
 
@@ -69,6 +72,10 @@ main()
     process.exit();
   })
   .catch((err) => {
-    console.error("Error:", err.message);
+    if (err.response) {
+      console.error("Error Response:", err.response.body);
+    } else {
+      console.error("Error:", err.message);
+    }
     process.exit(1);
   });

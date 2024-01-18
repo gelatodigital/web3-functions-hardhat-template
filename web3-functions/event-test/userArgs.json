@@ -1,0 +1,6 @@
+{
+  "target": "string",
+  "event": "string",
+  "filter": "string",
+  "webhookUrl": "string"
+}

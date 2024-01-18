@@ -1,0 +1,7 @@
+{
+  "target": "0x9999f7fea5938fd3b1e26a12c3f2fb024e194f97",
+  "event": "event Transfer(address indexed from, address indexed to, uint256 value)",
+  "eventTopic": "Transfer",
+  "filter": "0x23e359eCAB56210f4b8B559218C4d27A85b052b8",
+  "webhookUrl": "https://httpbin.org/post"
+}
