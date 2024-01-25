@@ -62,7 +62,7 @@
   },
   "dependencies": {
     "@gelatonetwork/automate-sdk": "^3.0.2",
-    "@gelatonetwork/web3-functions-sdk": "2.2.1",
+    "@gelatonetwork/web3-functions-sdk": "^2.2.1",
     "ky": "^0.33.2"
   }
 }

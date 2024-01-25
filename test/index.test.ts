@@ -16,7 +16,7 @@ describe("HelloWorld Tests", function () {
   });
 
   it("Return canExec: true", async () => {
-    const { result } = await helloWorld.run();
+    const { result } = await helloWorld.run("onRun");
 
     expect(result.canExec).to.equal(true);
   });
