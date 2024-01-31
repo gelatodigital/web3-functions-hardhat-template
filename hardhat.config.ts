@@ -130,9 +130,19 @@ const config: HardhatUserConfig = {
       url: `https://arb-goerli.g.alchemy.com/v2/${ALCHEMY_ID}`,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
+    arbsepolia: {
+      chainId: 421614,
+      url: `https://sepolia-rollup.arbitrum.io/rpc`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
     baseGoerli: {
       chainId: 84531,
       url: "https://goerli.base.org",
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
+    basesepolia: {
+      url: `https://sepolia.base.org`,
+      chainId: 84532,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
     gelopcelestiatestnet: {
@@ -153,6 +163,11 @@ const config: HardhatUserConfig = {
     mumbai: {
       chainId: 80001,
       url: `https://polygon-mumbai.g.alchemy.com/v2/${ALCHEMY_ID}`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
+    osepolia: {
+      chainId: 11155420,
+      url: `https://sly-light-scion.optimism-sepolia.quiknode.pro/30140607e2dbcaf7d581b1e706ce2f33579f5f8e/`,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
     sepolia: {
