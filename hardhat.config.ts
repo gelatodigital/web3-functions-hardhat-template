@@ -100,6 +100,11 @@ const config: HardhatUserConfig = {
       chainId: 59144,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
+    metis: {
+      chainId: 1088,
+      url: "https://metis-mainnet.public.blastapi.io",
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
     optimism: {
       chainId: 10,
       url: "https://mainnet.optimism.io",
@@ -125,11 +130,6 @@ const config: HardhatUserConfig = {
     },
 
     // Staging
-    arbgoerli: {
-      chainId: 421613,
-      url: `https://arb-goerli.g.alchemy.com/v2/${ALCHEMY_ID}`,
-      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
-    },
     arbsepolia: {
       chainId: 421614,
       url: `https://sepolia-rollup.arbitrum.io/rpc`,
@@ -145,19 +145,24 @@ const config: HardhatUserConfig = {
       chainId: 84532,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
+    blastsepolia: {
+      chainId: 168587773,
+      url: `https://sepolia.blast.io`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
     gelopcelestiatestnet: {
       chainId: 123420111,
       url: `https://rpc.op-celestia-testnet.gelato.digital`,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
-    geloptestnet: {
-      chainId: 42069,
-      url: `https://rpc.op-testnet.gelato.digital`,
-      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
-    },
     goerli: {
       chainId: 5,
       url: `https://eth-goerli.g.alchemy.com/v2/${ALCHEMY_ID}`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
+    lisksepolia: {
+      chainId: 4202,
+      url: `https://rpc.lisk-sepolia-testnet.gelato.digital`,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
     mumbai: {
