@@ -190,6 +190,11 @@ const config: HardhatUserConfig = {
       url: "https://rpc.zkatana.gelato.digital",
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
+    reyacronos: {
+      chainId: 1729,
+      url: "https://rpc.reya-cronos.gelato.digital",
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
   },
 
   verify: {
