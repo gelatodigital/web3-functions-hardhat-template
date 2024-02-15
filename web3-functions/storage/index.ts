@@ -11,6 +11,8 @@ Web3Function.onRun(async (context: Web3FunctionContext) => {
   // Use storage to retrieve previous state (stored values are always string)
   const lastBlockStr = (await storage.get("lastBlockNumber")) ?? "0";
   const lastBlock = parseInt(lastBlockStr);
+  console.log("storage size", await storage.getSize());
+  console.log("storage keys", await storage.getKeys());
   console.log(`Last block: ${lastBlock}`);
 
   const newBlock = await provider.getBlockNumber();

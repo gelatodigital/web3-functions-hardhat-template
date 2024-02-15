@@ -629,6 +629,11 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
+"@fastify/busboy@^2.0.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@fastify/busboy/-/busboy-2.1.0.tgz#0709e9f4cb252351c609c6e6d8d6779a8d25edff"
+  integrity sha512-+KpH+QxZU7O4675t3mnkQKcZZg56u+K/Ct2K+N2AZYNVK8kyeo/bI18tI8aPm3tvNNRyTWfj6s5tnGNlcbQRsA==
+
 "@ganache/ethereum-address@0.1.4":
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/@ganache/ethereum-address/-/ethereum-address-0.1.4.tgz#0e6d66f4a24f64bf687cb3ff7358fb85b9d9005e"
@@ -701,10 +706,10 @@
     ethers "^5.5.2"
     siwe "^1.1.6"
 
-"@gelatonetwork/web3-functions-sdk@^2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@gelatonetwork/web3-functions-sdk/-/web3-functions-sdk-2.2.1.tgz#5330ad0d98729e210b6f49ecce14f92341f044df"
-  integrity sha512-Pa5zsKDfhuMceRGkr3u7Se31+42hl+bSxVpu0CCq8KWJmUl+K0+wogouqV4fXeZMPGUcBGtQRYR3on2Gdmi5gg==
+"@gelatonetwork/web3-functions-sdk@2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@gelatonetwork/web3-functions-sdk/-/web3-functions-sdk-2.3.0.tgz#f9d3271ab0d4e4659ed41c6123bd9f753aa5d4b5"
+  integrity sha512-M8ll1Z/9VMkuopegV7WfzR9M0dZPH9Y502BPW9cODGdLXAOMAlpvHLcniJGItaLZhdstwxyGuFhLqSwwpOX10g==
   dependencies:
     "@ethersproject/address" "^5.7.0"
     "@ethersproject/contracts" "^5.7.0"
@@ -728,6 +733,7 @@
     semver "^7.5.0"
     signal-exit "^3.0.7"
     tar "^6.1.12"
+    undici "^6.6.2"
 
 "@humanwhocodes/config-array@^0.11.8":
   version "0.11.8"
@@ -5918,6 +5924,13 @@ undici@^5.14.0:
   integrity sha512-HOjK8l6a57b2ZGXOcUsI5NLfoTrfmbOl90ixJDl0AEFG4wgHNDQxtZy15/ZQp7HhjkpaGlp/eneMgtsu1dIlUA==
   dependencies:
     busboy "^1.6.0"
+
+undici@^6.6.2:
+  version "6.6.2"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-6.6.2.tgz#8dce5ae54e8a3bc7140c2b2a0972b5fde9a88efb"
+  integrity sha512-vSqvUE5skSxQJ5sztTZ/CdeJb1Wq0Hf44hlYMciqHghvz+K88U0l7D6u1VsndoFgskDcnU+nG3gYmMzJVzd9Qg==
+  dependencies:
+    "@fastify/busboy" "^2.0.0"
 
 universalify@^0.1.0:
   version "0.1.2"
