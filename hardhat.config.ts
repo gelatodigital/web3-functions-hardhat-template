@@ -32,14 +32,7 @@ const config: HardhatUserConfig = {
   w3f: {
     rootDir: "./web3-functions",
     debug: false,
-    networks: [
-      "ethereum",
-      "sepolia",
-      "baseGoerli",
-      "polygon",
-      "hardhat",
-      "mumbai",
-    ], //(multiChainProvider) injects provider for these networks
+    networks: ["ethereum", "sepolia", "polygon", "hardhat", "mumbai"], //(multiChainProvider) injects provider for these networks
   },
 
   namedAccounts: {
@@ -68,6 +61,11 @@ const config: HardhatUserConfig = {
     arbitrum: {
       chainId: 42161,
       url: "https://arb1.arbitrum.io/rpc",
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
+    astarzkevm: {
+      url: "https://rpc.astar-zkevm.gelato.digital",
+      chainId: 3776,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
     base: {
@@ -105,6 +103,11 @@ const config: HardhatUserConfig = {
       url: "https://metis-mainnet.public.blastapi.io",
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
+    mode: {
+      url: `https://mainnet.mode.network`,
+      chainId: 34443,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
     optimism: {
       chainId: 10,
       url: "https://mainnet.optimism.io",
@@ -135,9 +138,9 @@ const config: HardhatUserConfig = {
       url: `https://sepolia-rollup.arbitrum.io/rpc`,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
-    baseGoerli: {
-      chainId: 84531,
-      url: "https://goerli.base.org",
+    astarzkyoto: {
+      chainId: 6038361,
+      url: `https://rpc.zkyoto.gelato.digital`,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
     basesepolia: {
@@ -173,6 +176,11 @@ const config: HardhatUserConfig = {
     osepolia: {
       chainId: 11155420,
       url: `https://sly-light-scion.optimism-sepolia.quiknode.pro/30140607e2dbcaf7d581b1e706ce2f33579f5f8e/`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
+    reyacronos: {
+      chainId: 1729,
+      url: `https://rpc.reya-cronos.gelato.digital`,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
     sepolia: {
