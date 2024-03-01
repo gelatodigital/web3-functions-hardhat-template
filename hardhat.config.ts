@@ -73,6 +73,11 @@ const config: HardhatUserConfig = {
       chainId: 8453,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
+    blast: {
+      url: `https://blastl2-mainnet.public.blastapi.io`,
+      chainId: 81457,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
     bsc: {
       chainId: 56,
       url: "https://bsc-dataseed.binance.org/",
@@ -156,6 +161,11 @@ const config: HardhatUserConfig = {
     gelopcelestiatestnet: {
       chainId: 123420111,
       url: `https://rpc.op-celestia-testnet.gelato.digital`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
+    gelatoorbittestnet: {
+      url: `https://rpc.gelato-orbit-anytrust-testnet.gelato.digital`,
+      chainId: 88153591557,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
     goerli: {
