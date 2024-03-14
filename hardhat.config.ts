@@ -118,6 +118,11 @@ const config: HardhatUserConfig = {
       url: "https://mainnet.optimism.io",
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
+    playblock: {
+      chainId: 1829,
+      url: `https://rpc.playblock.io`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
     polygon: {
       chainId: 137,
       url: `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_ID}`,
@@ -126,6 +131,11 @@ const config: HardhatUserConfig = {
     polygonzk: {
       url: "https://zkevm-rpc.com",
       chainId: 1101,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
+    reyanetwork: {
+      url: "https://rpc.reya.network",
+      chainId: 1729,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
     zksync: {
@@ -138,6 +148,11 @@ const config: HardhatUserConfig = {
     },
 
     // Staging
+    amoy: {
+      chainId: 80002,
+      url: `https://rpc-amoy.polygon.technology`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
     arbsepolia: {
       chainId: 421614,
       url: `https://sepolia-rollup.arbitrum.io/rpc`,
@@ -151,6 +166,11 @@ const config: HardhatUserConfig = {
     basesepolia: {
       url: `https://sepolia.base.org`,
       chainId: 84532,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
+    blackberry: {
+      url: `https://rpc.polygon-blackberry.gelato.digital`,
+      chainId: 94204209,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
     blastsepolia: {
@@ -189,7 +209,7 @@ const config: HardhatUserConfig = {
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
     reyacronos: {
-      chainId: 1729,
+      chainId: 89346161,
       url: `https://rpc.reya-cronos.gelato.digital`,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
@@ -201,6 +221,11 @@ const config: HardhatUserConfig = {
     unreal: {
       chainId: 18231,
       url: `https://rpc.unreal.gelato.digital`,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
+    unrealorbit: {
+      chainId: 18233,
+      url: `https://rpc.unreal-orbit.gelato.digital`,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
     zkatana: {
