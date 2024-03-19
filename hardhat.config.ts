@@ -133,6 +133,11 @@ const config: HardhatUserConfig = {
       chainId: 1101,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
+    real: {
+      url: "https://rpc.realforreal.gelato.digital/",
+      chainId: 111188,
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    },
     reyanetwork: {
       url: "https://rpc.reya.network",
       chainId: 1729,
