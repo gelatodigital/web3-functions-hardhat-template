@@ -1,4 +1,4 @@
-import hre from "hardhat";
+import * as hre from "hardhat";
 import { expect } from "chai";
 import { CoingeckoOracle } from "../../typechain";
 import { before } from "mocha";
@@ -9,21 +9,22 @@ import {
   Web3FunctionResultV2,
 } from "@gelatonetwork/web3-functions-sdk";
 import { Web3FunctionHardhat } from "@gelatonetwork/web3-functions-sdk/hardhat-plugin";
-const { ethers, deployments, w3f } = hre;
+
+const { ethers } = hre;
 
 describe("CoingeckoOracle Tests", function () {
   this.timeout(0);
 
   let owner: SignerWithAddress;
-
   let oracle: CoingeckoOracle;
   let oracleW3f: Web3FunctionHardhat;
   let userArgs: Web3FunctionUserArgs;
 
   before(async function () {
+    const { deployments, w3f } = hre;
     await deployments.fixture();
 
-    [owner] = await hre.ethers.getSigners();
+    [owner] = await ethers.getSigners();
 
     oracle = await ethers.getContract("CoingeckoOracle");
     oracleW3f = w3f.get("oracle");
@@ -57,7 +58,7 @@ describe("CoingeckoOracle Tests", function () {
     expect(result.canExec).to.equal(false);
     if (result.canExec) throw new Error("result.canExec");
 
-    const message = result.message;
+    const message = (result as { canExec: false; message: string }).message;
     expect(message).to.equal("Time not elapsed");
   });
 
