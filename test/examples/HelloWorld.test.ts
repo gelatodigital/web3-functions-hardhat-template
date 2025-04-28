@@ -1,6 +1,5 @@
 import * as hre from "hardhat";
 import { expect } from "chai";
-import { before } from "mocha";
 import { Web3FunctionHardhat } from "@gelatonetwork/web3-functions-sdk/hardhat-plugin";
 
 describe("HelloWorld Tests", function () {
@@ -8,16 +7,14 @@ describe("HelloWorld Tests", function () {
 
   let helloWorld: Web3FunctionHardhat;
 
-  before(async function () {
+  before(async () => {
     const { deployments, w3f } = hre;
     await deployments.fixture();
-
     helloWorld = w3f.get("hello-world");
   });
 
   it("Return canExec: true", async () => {
     const { result } = await helloWorld.run("onRun");
-
     expect(result.canExec).to.equal(true);
   });
-});
+}); 

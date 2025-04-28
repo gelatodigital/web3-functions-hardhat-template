@@ -3,7 +3,7 @@ import {
   TriggerType,
   Web3Function,
 } from "@gelatonetwork/automate-sdk";
-import hre from "hardhat";
+import * as hre from "hardhat";
 import { CoingeckoOracle } from "../typechain";
 
 const { ethers, w3f } = hre;
@@ -15,7 +15,7 @@ const main = async () => {
   const [deployer] = await ethers.getSigners();
   const chainId = (await ethers.provider.getNetwork()).chainId;
 
-  const automate = new AutomateSDK(chainId, deployer);
+  const automate = await AutomateSDK.create(chainId, deployer);
   const web3Function = new Web3Function(chainId, deployer);
 
   // Deploy Web3Function on IPFS

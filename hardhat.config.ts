@@ -19,10 +19,9 @@ dotenv.config({ path: __dirname + "/.env" });
 import assert from "assert";
 
 // Process Env Variables
-const ALCHEMY_ID = process.env.ALCHEMY_ID;
-assert.ok(ALCHEMY_ID, "no Alchemy ID in process.env");
-const INFURA_ID = process.env.INFURA_ID;
-assert.ok(INFURA_ID, "no Infura ID in process.env");
+const ALCHEMY_ID = process.env.ALCHEMY_ID || "dummy";
+const INFURA_ID = process.env.INFURA_ID || "dummy";
+const FORK = process.env.FORK === "true";
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const ETHERSCAN_KEY = process.env.ETHERSCAN_KEY;
@@ -46,10 +45,12 @@ const config: HardhatUserConfig = {
   networks: {
     hardhat: {
       chainId: 31337,
-      forking: {
-        url: `https://polygon-amoy.g.alchemy.com/v2/${ALCHEMY_ID}`,
-        blockNumber: 4628220,
-      },
+      ...(FORK && {
+        forking: {
+          url: `https://polygon-amoy.g.alchemy.com/v2/${ALCHEMY_ID}`,
+          blockNumber: 4628220,
+        },
+      }),
     },
 
     // Prod
@@ -244,7 +245,7 @@ const config: HardhatUserConfig = {
   solidity: {
     compilers: [
       {
-        version: "0.8.17",
+        version: "0.8.29",
         settings: {
           optimizer: { enabled: true },
         },
